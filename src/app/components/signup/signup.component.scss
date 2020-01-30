@@ -1,0 +1,36 @@
+::ng-deep {
+  &.mat-card {
+    min-width: 25rem;
+  }
+
+  &.mat-card-header {
+    justify-content: center;
+  }
+
+  &.mat-form-field {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.signup {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: lightgray;
+
+  &__login {
+    border-bottom: 1px solid lightgray;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__login-button {
+    width: 100%;
+  }
+}

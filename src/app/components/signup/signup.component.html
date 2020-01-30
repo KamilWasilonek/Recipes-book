@@ -1,0 +1,48 @@
+<div class="signup">
+  <mat-card>
+    <div class="signup__login">
+      <button mat-flat-button color="primary" class="signup__login-button" routerLink='/login'>Login</button>
+    </div>
+    <mat-card-header>
+      <mat-card-title>Signup</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form class="signup__form" [formGroup]="signupForm" (ngSubmit)="signup(signupForm)">
+        <mat-form-field>
+          <input formControlName="email" matInput placeholder="Email" type="text" />
+          <mat-error *ngIf="email.errors?.required && email.touched" align="start"
+            >Enter you email</mat-error
+          >
+          <mat-error *ngIf="email.errors?.pattern && email.touched" align="start"
+            >Wrong email format</mat-error
+          >
+          <mat-error *ngIf="email.errors?.emailTaken" align="start">Email is taken</mat-error>
+          <mat-hint *ngIf="email.status === 'PENDING'" align="start">Checking...</mat-hint>
+          <mat-hint *ngIf="email.status === 'VALID'" align="start">Email is available!</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input formControlName="password" matInput placeholder="Password" type="password" />
+          <mat-error *ngIf="password.errors?.min && password.touched" align="start"
+            >Min length is 5</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="name" matInput placeholder="Name" type="text" />
+          <mat-error *ngIf="name.errors?.pattern && name.touched" align="start"
+            >Only letters</mat-error
+          >
+        </mat-form-field>
+        <mat-form-field>
+          <input formControlName="surname" matInput placeholder="Surname" type="text" />
+          <mat-error *ngIf="surname.errors?.pattern && surname.touched" align="start"
+            >Only letters</mat-error
+          >
+        </mat-form-field>
+        <button mat-flat-button color="primary" type="submit" [disabled]="signupForm.invalid">
+          Signup
+        </button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
