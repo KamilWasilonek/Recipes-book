@@ -1,0 +1,30 @@
+// Breakpoints created based on Flex-layout
+@mixin xl {
+  @media only screen and (min-width: 1920px) {
+    @content;
+  }
+}
+
+@mixin lg {
+  @media only screen and (min-width: 1280px) {
+    @content;
+  }
+}
+
+@mixin md {
+  @media only screen and (min-width: 960px) {
+    @content;
+  }
+}
+
+@mixin sm {
+  @media only screen and (min-width: 600px) {
+    @content;
+  }
+}
+
+@mixin xs {
+  @media only screen and (max-width: 599px) {
+    @content;
+  }
+}
