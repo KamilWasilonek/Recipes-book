@@ -4,6 +4,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SpinnerService } from 'src/app/shared/services/spinner.service';
 
 @Component({
   selector: 'app-login',
@@ -15,14 +16,22 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
   isLoginError = false;
   returnUrl: string;
+
+  test: boolean;
+
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private spinnerService: SpinnerService
   ) {}
 
   ngOnInit() {
+    this.spinnerService.loadingStatus$.pipe(takeUntil(this.destroy$)).subscribe(response => {
+      console.log(response);
+      this.test = response;
+    });
     this.loginForm = this.fb.group({
       email: [
         '',
@@ -57,7 +66,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           console.log('Login status');
           this.isLoginError = false;
           this.router.navigateByUrl(this.returnUrl);
-          console.log(this.isLoginError)
+          console.log(this.isLoginError);
         },
         err => {
           console.log('Error login status');
