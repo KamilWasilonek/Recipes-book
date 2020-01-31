@@ -1,7 +1,9 @@
 <div class="signup">
   <mat-card>
     <div class="signup__login">
-      <button mat-flat-button color="primary" class="signup__login-button" routerLink='/login'>Login</button>
+      <button mat-flat-button color="primary" class="signup__login-button" routerLink="/login">
+        Login
+      </button>
     </div>
     <mat-card-header>
       <mat-card-title>Signup</mat-card-title>
@@ -23,18 +25,25 @@
 
         <mat-form-field>
           <input formControlName="password" matInput placeholder="Password" type="password" />
+          <mat-error *ngIf="password.errors?.required && password.touched" align="start"
+            >Enter you password</mat-error
+          >
           <mat-error *ngIf="password.errors?.min && password.touched" align="start"
             >Min length is 5</mat-error
           >
         </mat-form-field>
         <mat-form-field>
           <input formControlName="name" matInput placeholder="Name" type="text" />
-          <mat-error *ngIf="name.errors?.pattern && name.touched" align="start"
-            >Only letters</mat-error
+          <mat-error *ngIf="name.errors?.required && name.touched" align="start"
+            >Enter you name</mat-error
           >
+          <mat-error *ngIf="name.errors?.pattern && name.touched" align="start">Only letters</mat-error>
         </mat-form-field>
         <mat-form-field>
           <input formControlName="surname" matInput placeholder="Surname" type="text" />
+          <mat-error *ngIf="surname.errors?.required && surname.touched" align="start"
+            >Enter you surname</mat-error
+          >
           <mat-error *ngIf="surname.errors?.pattern && surname.touched" align="start"
             >Only letters</mat-error
           >

@@ -1,7 +1,17 @@
 @import 'main.scss';
 
-::ng-deep .auth .mat-card {
-  min-width: 25rem;
+::ng-deep {
+  &.mat-card {
+    min-width: 25rem;
+  }
+
+  &.mat-card-header {
+    justify-content: center;
+  }
+
+  &.mat-form-field {
+    margin-bottom: 1.5rem;
+  }
 }
 
 .auth {
@@ -28,5 +38,15 @@
   &__form {
     display: flex;
     flex-direction: column;
+  }
+
+  &__login-status {
+    width: 100%;
+    padding: 1rem 0;
+    margin-bottom: 1rem;
+    color: #ffffff;
+    background-color: $redColor;
+    border-radius: 5px;
+    text-align: center;
   }
 }

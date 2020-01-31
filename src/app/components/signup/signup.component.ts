@@ -10,10 +10,10 @@ class EmailAsyncValidator {
         debounceTime(500),
         take(1),
         switchMap(_ =>
-          auth.isEmailAvailabe(control.value.toLowerCase()).pipe(
+          auth.findUser(control.value.toLowerCase()).pipe(
             map(response => {
               console.log(response);
-              return response.isEmailAvailable ? null : { emailTaken: true };
+              return response.user.length === 0 ? null : { emailTaken: true };
             })
           )
         )

@@ -1,18 +1,34 @@
 <div class="auth">
   <mat-card>
     <div class="auth__signup">
-      <button mat-flat-button color="primary" class="auth__signup-button" routerLink='/signup'>Signup</button>
+      <button mat-flat-button color="primary" class="auth__signup-button" routerLink="/signup">
+        Signup
+      </button>
     </div>
     <mat-card-header class="auth__header">
       <mat-card-title>Login</mat-card-title>
     </mat-card-header>
     <mat-card-content>
+      <mat-error class="auth__login-status" *ngIf="isLoginError">Auth failed</mat-error>
       <form class="auth__form" [formGroup]="loginForm" (ngSubmit)="login(loginForm)">
         <mat-form-field>
           <input formControlName="email" matInput placeholder="Email" type="text" />
+
+          <mat-error *ngIf="email.errors?.required && email.touched" align="start"
+            >Enter you email</mat-error
+          >
+          <mat-error *ngIf="email.errors?.pattern && email.touched" align="start"
+            >Wrong email format</mat-error
+          >
         </mat-form-field>
         <mat-form-field>
           <input formControlName="password" matInput placeholder="Password" type="password" />
+          <mat-error *ngIf="password.errors?.required && password.touched" align="start"
+            >Enter you password</mat-error
+          >
+          <mat-error *ngIf="password.errors?.minlength && password.touched" align="start"
+            >Password is to short</mat-error
+          >
         </mat-form-field>
         <button mat-flat-button color="primary" type="submit" [disabled]="loginForm.invalid">
           Login
