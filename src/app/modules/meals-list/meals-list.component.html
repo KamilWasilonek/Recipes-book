@@ -1,0 +1,25 @@
+<div class="meals" *ngIf="meals$ | async">
+  <mat-card-actions *ngFor="let meal of mealsList" class="meals__card">
+    <mat-card-header>
+      <mat-card-title>{{ meal.name }}</mat-card-title>
+    </mat-card-header>
+    <img
+      class="meals__card-image"
+      mat-card-image
+      src="http://localhost:5000/{{ meal.image }}"
+      alt="Meal image"
+    />
+    <mat-card-content>
+      <p class="meals__card-desc">
+        {{ meal.desc | excerpt: 200 }}
+      </p>
+    </mat-card-content>
+    <mat-card-actions class="meals__card-actions">
+      <button mat-raised-button color="primary" mat-button>View more</button>
+      <div>
+        <mat-icon class="meals__card-action-icon">edit</mat-icon>
+        <mat-icon class="meals__card-action-icon">delete</mat-icon>
+      </div>
+    </mat-card-actions>
+  </mat-card-actions>
+</div>
