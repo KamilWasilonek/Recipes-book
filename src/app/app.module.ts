@@ -14,6 +14,8 @@ import { SignupComponent } from './core/authentication/signup/signup.component';
 import { MealsListComponent } from './modules/meals-list/meals-list.component';
 import { MealDetailsComponent } from './modules/meal-details/meal-details.component';
 import { NewMealComponent } from './modules/new-meal/new-meal.component';
+import { SidenavListComponent } from './core/sidenav-list/sidenav-list.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { NewMealComponent } from './modules/new-meal/new-meal.component';
     HeaderComponent,
     MealDetailsComponent,
     NewMealComponent,
+    SidenavListComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,6 +36,7 @@ import { NewMealComponent } from './modules/new-meal/new-meal.component';
     // Angular Material
     SharedModule,
     HttpClientModule,
+    FlexLayoutModule
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }],
   bootstrap: [AppComponent],

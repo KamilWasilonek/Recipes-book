@@ -45,8 +45,10 @@ export class AuthService {
   }
 
   logoutUser() {
+    console.log(3);
     localStorage.removeItem('userToken');
     this.isUserLogged = false;
     this.loginSubject.next(this.isUserLogged);
+    console.log(4);
   }
 }

@@ -4,6 +4,7 @@ import { MaterialModule } from '../material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { Excerpt } from './pipes/excerpt';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [SpinnerComponent, Excerpt],

@@ -1,16 +1,25 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Meal } from '../models/meal';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MealsListService {
-  constructor(private http: HttpClient) {}
+  meals = [];
+  mealsSubject: BehaviorSubject<Meal[]>;
 
-  getMeals(): Observable<any> {
+  constructor(private http: HttpClient) {
+    this.mealsSubject = new BehaviorSubject([]);
+  }
+
+  getMeals(): void {
     const url = environment.ENDPOINT + 'meals';
-    return this.http.get(url);
+    this.http.get(url).subscribe((data: { meals: Meal[] }) => {
+      this.meals = data.meals;
+      this.mealsSubject.next(this.meals);
+    });
   }
 }

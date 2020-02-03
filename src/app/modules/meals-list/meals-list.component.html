@@ -1,5 +1,5 @@
-<div class="meals" *ngIf="meals$ | async">
-  <mat-card-actions *ngFor="let meal of mealsList" class="meals__card">
+<div class="meals" *ngIf="(mealsService.mealsSubject | async) as meals">
+  <mat-card-actions *ngFor="let meal of meals" class="meals__card">
     <mat-card-header>
       <mat-card-title>{{ meal.name }}</mat-card-title>
     </mat-card-header>
@@ -15,7 +15,7 @@
       </p>
     </mat-card-content>
     <mat-card-actions class="meals__card-actions">
-      <button mat-raised-button color="primary" mat-button>View more</button>
+      <button mat-raised-button color="primary" mat-button (click)="goToDetails(meal.id)">View more</button>
       <div>
         <mat-icon class="meals__card-action-icon">edit</mat-icon>
         <mat-icon class="meals__card-action-icon">delete</mat-icon>
