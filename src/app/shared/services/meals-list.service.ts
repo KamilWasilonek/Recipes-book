@@ -22,4 +22,21 @@ export class MealsListService {
       this.mealsSubject.next(this.meals);
     });
   }
+
+  addMeal(newMeal) {
+    const formData = new FormData();
+    formData.append('image', newMeal.image, newMeal.image.name);
+    formData.append('name', newMeal.name);
+    formData.append('desc', newMeal.desc);
+    this.http.post('http://localhost:5000/meals', formData).subscribe(
+      res => {
+        console.log(res);
+        this.meals.push(newMeal);
+        this.mealsSubject.next(this.meals);
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
 }

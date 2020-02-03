@@ -1,1 +1,29 @@
-<p>new-meal works!</p>
+<div class="newMeal">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Add new post</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <form class="newMeal__form" [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
+        <button type="button" color="primary" mat-raised-button (click)="fileInput.click()">
+          Choose File
+        </button>
+        <input
+          hidden
+          formControlName="image"
+          (change)="onFileSelect($event)"
+          #fileInput
+          type="file"
+        />
+        <span class="newMeal__image-name">{{selectedFile ? (selectedFile.name | titlecase) :  "No file choosen"}}</span>
+
+        <mat-form-field>
+          <input matInput formControlName="name" type="text" placeholder="Name" /> </mat-form-field
+        ><mat-form-field>
+          <input matInput formControlName="desc" type="text" placeholder="Description" />
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" [disabled]="myForm.invalid">Submit form</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

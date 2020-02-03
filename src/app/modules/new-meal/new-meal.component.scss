@@ -1,0 +1,23 @@
+::ng-deep {
+  &.mat-card-header {
+    justify-content: center;
+  }
+}
+
+.newMeal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+
+  &__form {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: 2rem;
+    width: 40rem;
+  }
+
+  &__image-name {
+    text-align: center;
+  }
+}
