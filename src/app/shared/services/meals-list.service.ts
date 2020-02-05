@@ -10,6 +10,7 @@ import { Meal } from '../models/meal';
 export class MealsListService {
   meals = [];
   mealsSubject: BehaviorSubject<Meal[]>;
+  
 
   constructor(private http: HttpClient) {
     this.mealsSubject = new BehaviorSubject([]);
@@ -38,5 +39,11 @@ export class MealsListService {
         console.log(err);
       }
     );
+  }
+
+  deleteMeal(mealId) {
+    this.http.delete(`${environment.ENDPOINT}meals/${mealId}`).subscribe(response => {
+      console.log(response);
+    });
   }
 }

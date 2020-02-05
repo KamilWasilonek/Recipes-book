@@ -1,0 +1,23 @@
+<mat-card-actions class="meal">
+  <mat-card-header>
+    <mat-card-title>{{ meal.name }}</mat-card-title>
+  </mat-card-header>
+  <img
+    class="meal__image"
+    mat-card-image
+    src="http://localhost:5000/{{ meal.image }}"
+    alt="Meal image"
+  />
+  <mat-card-content>
+    <p class="meal__desc">
+      {{ meal.desc | excerpt: 200 }}
+    </p>
+  </mat-card-content>
+  <mat-card-actions class="meal__actions">
+    <button mat-raised-button color="primary" mat-button >View more</button>
+    <div>
+      <mat-icon class="meal__action" (click)="onMealEdit()">edit</mat-icon>
+      <mat-icon class="meal__action" (click)="onMealRemove()">delete</mat-icon>
+    </div>
+  </mat-card-actions>
+</mat-card-actions>

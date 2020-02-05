@@ -16,6 +16,8 @@ import { MealDetailsComponent } from './modules/meal-details/meal-details.compon
 import { NewMealComponent } from './modules/new-meal/new-meal.component';
 import { SidenavListComponent } from './core/sidenav-list/sidenav-list.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MealEditComponent } from './modules/meal-edit/meal-edit.component';
+import { MealComponent } from './modules/meals-list/meal/meal.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MealDetailsComponent,
     NewMealComponent,
     SidenavListComponent,
+    MealEditComponent,
+    MealComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +42,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     HttpClientModule,
     FlexLayoutModule
   ],
+  entryComponents: [MealEditComponent],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }],
   bootstrap: [AppComponent],
 })
