@@ -1,20 +1,14 @@
 @import 'main.scss';
 
 ::ng-deep {
-  &.mat-card-header-text {
-    text-align: center;
-    padding: 1rem 0;
+  &.mat-card-header {
+    justify-content: center;
   }
 }
 
 .meal {
   max-width: 40rem;
-  background: $lightGrey;
-  border-radius: 5px;
-
-  &__image {
-    width: 100%;
-  }
+  overflow: hidden;
 
   &__desc {
     padding: 0 2rem;

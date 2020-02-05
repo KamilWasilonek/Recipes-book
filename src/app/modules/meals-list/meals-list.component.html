@@ -1,8 +1,9 @@
-<div class="meals" *ngIf="(mealsService.mealsSubject | async) as meals">
+<div class="meals" *ngIf="mealsService.mealsSubject | async as meals">
   <app-meal
-   *ngFor="let singleMeal of meals"
-   [meal]="singleMeal"
-   (editMeal)="openDialog($event)"
-   (removeMeal)="removeMeal($event)"
-   ></app-meal>
+    appMoveOnHover
+    *ngFor="let singleMeal of meals"
+    [meal]="singleMeal"
+    (editMeal)="openDialog($event)"
+    (removeMeal)="removeMeal($event)"
+  ></app-meal>
 </div>
