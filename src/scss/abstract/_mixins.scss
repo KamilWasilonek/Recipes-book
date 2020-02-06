@@ -28,3 +28,14 @@
     @content;
   }
 }
+
+@mixin formMessage($color) {
+  width: 100%;
+  padding: 1rem 0;
+  margin-bottom: 1rem;
+  color: #ffffff;
+  background-color: $color;
+  border-radius: 5px;
+  text-align: center;
+}
+

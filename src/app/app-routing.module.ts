@@ -14,8 +14,8 @@ const routes: Routes = [
   { path: 'new-meal', component: NewMealComponent, canActivate: [AuthGuardService] },
   { path: 'login', component: LoginComponent, canActivate: [LoggedGuardService] },
   { path: 'signup', component: SignupComponent, canActivate: [LoggedGuardService] },
-  // { path: '', redirectTo: 'meals', pathMatch: 'full' },
-  { path: '**', redirectTo: 'meals', pathMatch: 'full' },
+  { path: '', redirectTo: '/', pathMatch: 'full' },
+  { path: '**', redirectTo: '/', pathMatch: 'full' },
 ];
 
 @NgModule({

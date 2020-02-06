@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       ],
       password: ['', [Validators.required, Validators.minLength(5)]],
     });
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/meals';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   get email() {
@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         response => {
           console.log('Login status');
           this.isLoginError = false;
-          this.router.navigateByUrl(this.returnUrl);
+          this.router.navigateByUrl(this.returnUrl ? this.returnUrl : '/');
           console.log(this.isLoginError);
         },
         err => {

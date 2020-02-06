@@ -5,6 +5,18 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { debounceTime, tap } from 'rxjs/operators';
 
+interface LoginResponse {
+  message: string;
+  token: string;
+  email: string;
+  name: string;
+  surname: string;
+}
+
+interface SignupResponse {
+  token: string,
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -26,12 +38,26 @@ export class AuthService {
     });
   }
 
+  signupUser(user) {
+    console.log(user);
+    const url = environment.ENDPOINT + 'user/signup';
+    return this.http.post(url, user);
+  }
+
   loginUser(credentials: { email: string; password: string }) {
     const url = environment.ENDPOINT + 'user/login';
-    return this.http.post<{ message: string; token: string }>(url, credentials).pipe(
+    return this.http.post<LoginResponse>(url, credentials).pipe(
       tap(
         response => {
           localStorage.setItem('userToken', response.token);
+          localStorage.setItem(
+            'userDetails',
+            JSON.stringify({
+              email: response.email,
+              name: response.name,
+              surname: response.surname,
+            })
+          );
           this.isUserLogged = true;
         },
         err => {
@@ -49,6 +75,5 @@ export class AuthService {
     localStorage.removeItem('userToken');
     this.isUserLogged = false;
     this.loginSubject.next(this.isUserLogged);
-    console.log(4);
   }
 }
