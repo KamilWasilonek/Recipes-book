@@ -16,8 +16,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
   isLoginError = false;
   returnUrl: string;
-
-  test: boolean;
+  isSpinnerOn: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -29,8 +28,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.spinnerService.loadingStatus$.pipe(takeUntil(this.destroy$)).subscribe(response => {
-      console.log(response);
-      this.test = response;
+      this.isSpinnerOn = response;
     });
     this.loginForm = this.fb.group({
       email: [

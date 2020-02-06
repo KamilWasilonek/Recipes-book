@@ -10,10 +10,11 @@ import { Meal } from '../models/meal';
 export class MealsListService {
   meals = [];
   mealsSubject: BehaviorSubject<Meal[]>;
-  
+  mealsList$: Observable<Meal[]>;
 
   constructor(private http: HttpClient) {
     this.mealsSubject = new BehaviorSubject([]);
+    this.mealsList$ = this.mealsSubject.asObservable();
   }
 
   getMeals(): void {

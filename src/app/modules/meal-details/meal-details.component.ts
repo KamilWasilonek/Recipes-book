@@ -10,11 +10,13 @@ import { Meal } from 'src/app/shared/models/meal';
   styleUrls: ['./meal-details.component.scss'],
 })
 export class MealDetailsComponent implements OnInit {
-  routeSubscription: Subscription;
+  mealId: string;
 
-  meal: Meal;
+  constructor(private route: ActivatedRoute) {}
 
-  constructor(private mealsService: MealsListService, private route: ActivatedRoute) {}
-
-  ngOnInit() {}
+  ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.mealId = params.id;
+    });
+  }
 }

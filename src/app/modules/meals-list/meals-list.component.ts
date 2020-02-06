@@ -28,7 +28,7 @@ export class MealsListComponent implements OnInit {
 
   goToDetails(mealId) {
     console.log(mealId);
-    this.router.navigate(['/meals/' + mealId, mealId]);
+    this.router.navigate([`meals`, mealId]);
   }
 
   removeMeal(mealId) {
