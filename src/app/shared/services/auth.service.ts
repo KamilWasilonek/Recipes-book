@@ -40,7 +40,6 @@ export class AuthService {
   }
 
   signupUser(user) {
-    console.log(user);
     const url = this.testEndpoint + 'user/signup';
     return this.http.post(url, user);
   }

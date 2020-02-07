@@ -12,11 +12,12 @@ import { SpinnerService } from 'src/app/shared/services/spinner.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  destroy$: Subject<boolean> = new Subject<boolean>();
   loginForm: FormGroup;
   isLoginError = false;
   returnUrl: string;
   isSpinnerOn: boolean;
+
+  destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
     private fb: FormBuilder,
@@ -30,6 +31,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.spinnerService.loadingStatus$.pipe(takeUntil(this.destroy$)).subscribe(response => {
       this.isSpinnerOn = response;
     });
+
     this.loginForm = this.fb.group({
       email: [
         '',
@@ -44,36 +46,30 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
-  get email() {
-    return this.loginForm.get('email');
-  }
-  get password() {
-    return this.loginForm.get('password');
-  }
-
-  login(loginForm) {
+  login() {
     const credentials = {
-      email: loginForm.controls.email.value,
-      password: loginForm.controls.password.value,
+      email: this.email.value,
+      password: this.password.value,
     };
     this.authService
       .loginUser(credentials)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
-        response => {
-          console.log('Login status');
+        () => {
           this.isLoginError = false;
           this.router.navigateByUrl(this.returnUrl ? this.returnUrl : '/');
-          console.log(this.isLoginError);
         },
         err => {
-          console.log('Error login status');
           this.isLoginError = true;
         }
       );
-    // this.authService.loginStatus.pipe(takeUntil(this.destroy$)).subscribe(response => {
-    //   this.status = response;
-    // });
+  }
+
+  get email() {
+    return this.loginForm.get('email');
+  }
+  get password() {
+    return this.loginForm.get('password');
   }
 
   ngOnDestroy() {

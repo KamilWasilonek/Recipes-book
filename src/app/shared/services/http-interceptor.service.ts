@@ -11,9 +11,6 @@ export class HttpInterceptorService {
   constructor(private spinnerService: SpinnerService) {}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.spinnerService.show();
-    this.spinnerService.loadingStatus$.subscribe(res => {
-      console.log(res);
-    });
     const jwt = localStorage.getItem('userToken');
     if (jwt) {
       req = req.clone({

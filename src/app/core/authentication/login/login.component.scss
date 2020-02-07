@@ -14,7 +14,7 @@
   }
 }
 
-.auth {
+.login {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,18 +24,8 @@
   background-repeat: no-repeat;
   background-position: center center;
 
-  &__signup {
-    border-bottom: 1px solid lightgray;
-    padding-bottom: 15px;
-    margin-bottom: 15px;
-  }
-
-  &__signup-button {
+  &__signup-navigation {
     width: 100%;
-  }
-
-  &__header {
-    justify-content: center;
   }
 
   &__form {
@@ -43,7 +33,7 @@
     flex-direction: column;
   }
 
-  &__login-status {
+  &__error-status {
     @include formMessage($redColor);
   }
 }

@@ -7,7 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpInterceptorService } from './shared/services/http-interceptor.service';
-import { FooterComponent } from './core/footer/footer.component';
 import { HeaderComponent } from './core/header/header.component';
 import { LoginComponent } from './core/authentication/login/login.component';
 import { SignupComponent } from './core/authentication/signup/signup.component';
@@ -25,13 +24,12 @@ import { MealComponent } from './modules/meals-list/meal/meal.component';
     LoginComponent,
     SignupComponent,
     MealsListComponent,
-    FooterComponent,
     HeaderComponent,
     MealDetailsComponent,
     NewMealComponent,
     SidenavListComponent,
     MealEditComponent,
-    MealComponent
+    MealComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,7 +38,7 @@ import { MealComponent } from './modules/meals-list/meal/meal.component';
     // Angular Material
     SharedModule,
     HttpClientModule,
-    FlexLayoutModule
+    FlexLayoutModule,
   ],
   entryComponents: [MealEditComponent],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }],

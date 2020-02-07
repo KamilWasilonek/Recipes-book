@@ -1,17 +1,24 @@
 <app-spinner *ngIf="isSpinnerOn"></app-spinner>
-<div class="auth">
+<div class="login">
   <mat-card>
-    <div class="auth__signup">
-      <button mat-flat-button color="primary" class="auth__signup-button" routerLink="/signup">
-        Signup
-      </button>
-    </div>
-    <mat-card-header class="auth__header">
+
+    <!-- Navigate to login page -->
+    <button mat-flat-button color="primary" class="login__signup-navigation" routerLink="/signup">
+      Signup
+    </button>
+
+    <!-- Separate section -->
+    <app-form-separator></app-form-separator>
+
+    <!-- Form header -->
+    <mat-card-header>
       <mat-card-title>Login</mat-card-title>
     </mat-card-header>
+
+    <!-- Form content -->
     <mat-card-content>
-      <mat-error class="auth__login-status" *ngIf="isLoginError">Auth failed</mat-error>
-      <form class="auth__form" [formGroup]="loginForm" (ngSubmit)="login(loginForm)">
+      <div class="login__error-status" *ngIf="isLoginError">Login failed</div>
+      <form class="login__form" [formGroup]="loginForm" (ngSubmit)="login()">
         <mat-form-field>
           <input formControlName="email" matInput placeholder="Email" type="text" />
 
