@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { environment } from 'src/environments/environment';
 import { Meal } from '../models/meal';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MealsListService {
+  testEndpoint = 'http://localhost:5000/';
   meals = [];
   mealsSubject: BehaviorSubject<Meal[]>;
   mealsList$: Observable<Meal[]>;
@@ -18,7 +18,7 @@ export class MealsListService {
   }
 
   getMeals(): void {
-    const url = environment.ENDPOINT + 'meals';
+    const url = this.testEndpoint + 'meals';
     this.http.get(url).subscribe((data: { meals: Meal[] }) => {
       this.meals = data.meals;
       this.mealsSubject.next(this.meals);
@@ -26,13 +26,15 @@ export class MealsListService {
   }
 
   addMeal(newMeal) {
+    const url = this.testEndpoint + 'meals';
+
     const formData = new FormData();
     formData.append('image', newMeal.image, newMeal.image.name);
     formData.append('name', newMeal.name);
     formData.append('desc', newMeal.desc);
-    this.http.post('http://localhost:5000/meals', formData).subscribe(
-      res => {
-        console.log(res);
+
+    this.http.post(url, formData).subscribe(
+      () => {
         this.meals.push(newMeal);
         this.mealsSubject.next(this.meals);
       },
@@ -43,8 +45,13 @@ export class MealsListService {
   }
 
   deleteMeal(mealId) {
-    this.http.delete(`${environment.ENDPOINT}meals/${mealId}`).subscribe(response => {
-      console.log(response);
-    });
+    this.http.delete(`${this.testEndpoint}meals/${mealId}`).subscribe(
+      () => {
+        console.log('Meal deleated');
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 }

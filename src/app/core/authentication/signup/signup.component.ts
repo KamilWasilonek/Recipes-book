@@ -1,51 +1,25 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
-import { AuthService } from 'src/app/shared/services/auth.service';
-import { debounceTime, map, take, switchMap, takeUntil } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { SpinnerService } from 'src/app/shared/services/spinner.service';
-import { Subject, Observable } from 'rxjs';
-import { CanComponentDeactivate } from 'src/app/shared/services/can-deactivate-guard.service';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
-class EmailAsyncValidator {
-  static email(auth: AuthService) {
-    return (control: AbstractControl) => {
-      return control.valueChanges.pipe(
-        debounceTime(2000),
-        take(1),
-        switchMap(_ =>
-          auth.findUser(control.value.toLowerCase()).pipe(
-            map(response => {
-              console.log(response);
-              return response.user.length === 0 ? null : { emailTaken: true };
-            })
-          )
-        )
-      );
-    };
-  }
-}
+import { CanComponentDeactivate } from 'src/app/shared/services/can-deactivate-guard.service';
+import { EmailAsyncValidator } from 'src/app/shared/validators/emailAsyncValidator';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
 })
-export class SignupComponent implements OnInit, OnDestroy, CanComponentDeactivate {
+export class SignupComponent implements OnInit, CanComponentDeactivate {
   signupForm: FormGroup;
   signupStatus = '';
   isError = false;
   isFormSaved = false;
-
-  destroy$: Subject<boolean> = new Subject<boolean>();
   isSpinnerOn = false;
 
-  constructor(
-    private authService: AuthService,
-    private fb: FormBuilder,
-    private router: Router,
-    private spinnerService: SpinnerService
-  ) {}
+  constructor(private authService: AuthService, private fb: FormBuilder, private router: Router) {}
 
   ngOnInit() {
     this.signupForm = this.fb.group({
@@ -66,43 +40,30 @@ export class SignupComponent implements OnInit, OnDestroy, CanComponentDeactivat
     });
   }
 
-  get email() {
-    return this.signupForm.get('email');
-  }
-  get password() {
-    return this.signupForm.get('password');
-  }
-  get name() {
-    return this.signupForm.get('name');
-  }
-  get surname() {
-    return this.signupForm.get('surname');
-  }
-
-  signup(signupForm) {
+  signup() {
     this.signupStatus = '';
     this.isSpinnerOn = true;
-    const controls = signupForm.controls;
+
     const user = {
-      email: controls.email.value,
-      password: controls.password.value,
-      name: controls.name.value,
-      surname: controls.surname.value,
+      email: this.email.value,
+      password: this.password.value,
+      name: this.name.value,
+      surname: this.surname.value,
     };
 
     this.authService.signupUser(user).subscribe(
-      response => {
+      () => {
         this.isSpinnerOn = false;
         this.isError = false;
-        this.signupStatus = 'User was registered';
+        this.signupStatus = 'User has been registered';
         this.isFormSaved = true;
-        // setTimeout(() => {
-        //   this.router.navigate(['/login']);
-        // }, 5000);
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 3000);
       },
       err => {
         this.isSpinnerOn = false;
-        this.isError = false;
+        this.isError = true;
         this.signupStatus = 'Signup error';
         console.log(err);
       }
@@ -117,8 +78,16 @@ export class SignupComponent implements OnInit, OnDestroy, CanComponentDeactivat
     }
   }
 
-  ngOnDestroy() {
-    this.destroy$.next(true);
-    this.destroy$.unsubscribe();
+  get email() {
+    return this.signupForm.get('email');
+  }
+  get password() {
+    return this.signupForm.get('password');
+  }
+  get name() {
+    return this.signupForm.get('name');
+  }
+  get surname() {
+    return this.signupForm.get('surname');
   }
 }

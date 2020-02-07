@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { debounceTime, tap } from 'rxjs/operators';
@@ -14,13 +13,15 @@ interface LoginResponse {
 }
 
 interface SignupResponse {
-  token: string,
+  token: string;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  testEndpoint = 'http://localhost:5000/';
+
   isUserLogged: boolean;
   loginSubject: BehaviorSubject<boolean>;
   loginStatus: Observable<boolean>;
@@ -33,19 +34,19 @@ export class AuthService {
   }
 
   findUser(email: string) {
-    return this.http.post<{ user: [] }>(environment.ENDPOINT + 'user/findUser', {
+    return this.http.post<{ user: [] }>(this.testEndpoint + 'user/findUser', {
       email,
     });
   }
 
   signupUser(user) {
     console.log(user);
-    const url = environment.ENDPOINT + 'user/signup';
+    const url = this.testEndpoint + 'user/signup';
     return this.http.post(url, user);
   }
 
   loginUser(credentials: { email: string; password: string }) {
-    const url = environment.ENDPOINT + 'user/login';
+    const url = this.testEndpoint + 'user/login';
     return this.http.post<LoginResponse>(url, credentials).pipe(
       tap(
         response => {
@@ -71,8 +72,8 @@ export class AuthService {
   }
 
   logoutUser() {
-    console.log(3);
     localStorage.removeItem('userToken');
+    localStorage.removeItem('userDetails');
     this.isUserLogged = false;
     this.loginSubject.next(this.isUserLogged);
   }

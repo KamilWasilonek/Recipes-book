@@ -29,6 +29,12 @@
   }
 }
 
+@mixin formSectionSeparator {
+  margin: 1rem 0;
+  height: 0.1rem;
+  background-color: lightgrey;
+}
+
 @mixin formMessage($color) {
   width: 100%;
   padding: 1rem 0;

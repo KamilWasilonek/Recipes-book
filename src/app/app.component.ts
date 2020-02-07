@@ -18,7 +18,6 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.spinnerService.loadingStatus$.pipe(takeUntil(this.destroy$)).subscribe(response => {
       this.isSpinnerOn = response;
-      console.log(this.isSpinnerOn);
     });
   }
 

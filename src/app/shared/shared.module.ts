@@ -6,10 +6,26 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 import { Excerpt } from './pipes/excerpt';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MoveOnHoverDirective } from './directives/move-on-hover.directive';
+import { FormSeparatorComponent } from './components/form-separator/form-separator.component';
+import { FormSpinnerComponent } from './components/form-spinner/form-spinner.component';
 
 @NgModule({
-  declarations: [SpinnerComponent, Excerpt, MoveOnHoverDirective],
+  declarations: [
+    SpinnerComponent,
+    Excerpt,
+    MoveOnHoverDirective,
+    FormSeparatorComponent,
+    FormSpinnerComponent,
+  ],
   imports: [CommonModule, MaterialModule, ReactiveFormsModule],
-  exports: [MaterialModule, ReactiveFormsModule, SpinnerComponent, Excerpt, MoveOnHoverDirective],
+  exports: [
+    MaterialModule,
+    ReactiveFormsModule,
+    SpinnerComponent,
+    Excerpt,
+    MoveOnHoverDirective,
+    FormSeparatorComponent,
+    FormSpinnerComponent,
+  ],
 })
 export class SharedModule {}

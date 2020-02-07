@@ -18,37 +18,26 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
+  min-height: 100%;
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url('../../../../assets/images/auth-bg-2.jpg');
+    url('/assets/images/auth-bg.jpg');
   background-size: cover;
   background-repeat: no-repeat;
 
-  &__login {
-    border-bottom: 1px solid lightgray;
-    padding-bottom: 15px;
-    margin-bottom: 15px;
+  &__login-navigation {
+    width: 100%;
   }
 
   &__form {
     display: flex;
     flex-direction: column;
   }
-
-  &__login-button {
-    width: 100%;
-  }
-
-  &__spinner {
-    display: block;
-    margin: 0 auto 1rem auto;
-  }
 }
 
 .errorStatus {
-  @include formMessage($redColor)
+  @include formMessage($redColor);
 }
 
 .successStatus {
-  @include formMessage($greenColor)
+  @include formMessage($greenColor);
 }
