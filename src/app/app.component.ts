@@ -12,6 +12,7 @@ import { SpinnerService } from './shared/services/spinner.service';
 export class AppComponent implements OnInit, OnDestroy {
   destroy$: Subject<boolean> = new Subject<boolean>();
   isSpinnerOn: boolean;
+  isUserLogged: boolean;
 
   constructor(private authService: AuthService, private spinnerService: SpinnerService) {}
 
@@ -19,6 +20,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.spinnerService.loadingStatus$.pipe(takeUntil(this.destroy$)).subscribe(response => {
       this.isSpinnerOn = response;
     });
+    this.isUserLogged = this.authService.isUserLogged;
   }
 
   ngOnDestroy() {

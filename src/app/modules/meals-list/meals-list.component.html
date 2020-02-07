@@ -1,4 +1,4 @@
-<div class="meals" *ngIf="mealsService.mealsSubject | async as meals">
+<div class="meals" *ngIf="meals">
   <app-meal
     appMoveOnHover
     *ngFor="let singleMeal of meals"

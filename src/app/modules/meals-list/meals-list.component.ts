@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MealsListService } from 'src/app/shared/services/meals-list.service';
 import { Subscription, Observable } from 'rxjs';
 import { Meal } from 'src/app/shared/models/meal';
-import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { MealEditComponent } from '../meal-edit/meal-edit.component';
@@ -12,9 +11,11 @@ import { MealEditComponent } from '../meal-edit/meal-edit.component';
   templateUrl: './meals-list.component.html',
   styleUrls: ['./meals-list.component.scss'],
 })
-export class MealsListComponent implements OnInit {
+export class MealsListComponent implements OnInit, OnDestroy {
   meals$: Observable<Meal[]>;
-  mealsList: Meal[];
+  meals: Meal[];
+
+  mealSubscription: Subscription;
 
   constructor(
     private mealsService: MealsListService,
@@ -24,6 +25,9 @@ export class MealsListComponent implements OnInit {
 
   ngOnInit() {
     this.mealsService.getMeals();
+    this.mealSubscription = this.mealsService.mealsList$.subscribe(res => {
+      this.meals = res;
+    });
   }
 
   goToDetails(mealId) {
@@ -49,5 +53,9 @@ export class MealsListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(data => {
       console.log('OUTPUT: ', data);
     });
+  }
+
+  ngOnDestroy() {
+    this.mealSubscription.unsubscribe();
   }
 }

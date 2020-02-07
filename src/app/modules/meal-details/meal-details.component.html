@@ -2,7 +2,7 @@
   <mat-card-header>
     <mat-card-title>Details</mat-card-title>
   </mat-card-header>
-  <img mat-card-image (loaded)="onImageLoad()" src="http://localhost:5000/{{ meal.image }}" alt="Meal image" />
+  <img mat-card-image src="http://localhost:5000/{{ meal.image }}" alt="Meal image" />
   <mat-card-content>
     <p>
      {{ meal.desc }}
