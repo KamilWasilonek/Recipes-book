@@ -24,12 +24,12 @@ export class AuthService {
 
   isUserLogged: boolean;
   loginSubject: BehaviorSubject<boolean>;
-  loginStatus: Observable<boolean>;
+  loginStatus$: Observable<boolean>;
 
   constructor(private http: HttpClient, private router: Router) {
     this.isUserLogged = localStorage.getItem('userToken') ? true : false;
     this.loginSubject = new BehaviorSubject(this.isUserLogged);
-    this.loginStatus = this.loginSubject.asObservable();
+    this.loginStatus$ = this.loginSubject.asObservable();
     this.loginSubject.next(this.isUserLogged);
   }
 

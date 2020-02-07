@@ -1,28 +1,42 @@
+@import 'main.scss';
+
 a {
   text-decoration: none;
   color: white;
 }
 
-a:hover, a:active{
-  color: lightgray;
+a:hover, a:active, .active{
+  color: $orangeColor;
 }
 
-.navigation-items{
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-self: center;
+  padding: 0 5%;
 
-mat-toolbar{
-  border-radius: 3px;
-}
-
-@media(max-width: 959px){
-  mat-toolbar{
-      border-radius: 0px;
+  &__mobile {
+    @media only screen and (min-width: 600px) {
+      display: none;
+    }
   }
-}
 
-.active {
-  color: yellowgreen;
+  &__menu-list {
+    font-size: 2rem;
+    @media only screen and (max-width: 599px) {
+      display: none;
+    }
+  }
+
+  &__menu-list-item {
+    padding-right: 3rem;
+  }
+
+  &__logout {
+    display: flex;
+    justify-content: end;
+    @media only screen and (max-width: 599px) {
+      display: none;
+    }
+  }
 }

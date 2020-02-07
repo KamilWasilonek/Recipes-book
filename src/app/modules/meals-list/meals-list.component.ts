@@ -24,9 +24,10 @@ export class MealsListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.mealsService.getMeals();
-    this.mealSubscription = this.mealsService.mealsList$.subscribe(res => {
-      this.meals = res;
+    this.mealsService.getMeals().subscribe(() => {
+      this.mealSubscription = this.mealsService.mealsList$.subscribe(meals => {
+        this.meals = meals;
+      });
     });
   }
 
@@ -56,6 +57,5 @@ export class MealsListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.mealSubscription.unsubscribe();
   }
 }

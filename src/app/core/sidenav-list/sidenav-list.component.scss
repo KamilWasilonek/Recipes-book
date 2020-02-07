@@ -1,13 +1,17 @@
+@import 'main.scss';
+
 a {
   text-decoration: none;
   color: white;
 }
 
-a:hover, a:active{
-  color: lightgray;
+a:hover,
+a:active,
+.active {
+  color: $orangeColor;
 }
 
-.nav-caption{
+.nav-caption {
   display: inline-block;
   padding-left: 6px;
 }

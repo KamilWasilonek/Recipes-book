@@ -1,22 +1,22 @@
-<mat-toolbar color="primary">
-  <div fxHide.gt-xs>
+<mat-toolbar class="header" color="primary">
+  <div class="header__mobile">
     <button mat-icon-button (click)="onToggleSidenav()">
       <mat-icon>menu</mat-icon>
     </button>
   </div>
-  <div fxHide.xs>
-    <a routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" routerLink="/">Meals</a>
-    <span> | </span>
-    <a routerLinkActive="active" routerLink="/new-meal">New meal</a>
+  <div class="header__menu-list">
+    <a
+      class="header__menu-list-item"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      routerLink="/"
+      >Meals</a
+    >
+    <a class="header__menu-list-item" routerLinkActive="active" routerLink="/new-meal">New meal</a>
   </div>
-  <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
-    <ul fxLayout fxLayoutGap="15px" class="navigation-items">
-      <li routerLinkActive="active">
-        <a mat-list-item (click)="logout()" routerLink="/login">
-          <mat-icon>logout</mat-icon><span class="nav-caption"></span>
-          
-        </a>
-      </li>
-    </ul>
+  <div class="header__logout">
+    <a mat-list-item (click)="logout()" routerLink="/login">
+      <mat-icon>logout</mat-icon><span></span>
+    </a>
   </div>
 </mat-toolbar>

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Meal } from '../models/meal';
+import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -17,12 +18,14 @@ export class MealsListService {
     this.mealsList$ = this.mealsSubject.asObservable();
   }
 
-  getMeals(): void {
+  getMeals(): Observable<{ meals: Meal[] }> {
     const url = this.testEndpoint + 'meals';
-    this.http.get(url).subscribe((data: { meals: Meal[] }) => {
-      this.meals = data.meals;
-      this.mealsSubject.next(this.meals);
-    });
+    return this.http.get(url).pipe(
+      tap((data: { meals: Meal[] }) => {
+        this.meals = data.meals;
+        this.mealsSubject.next(this.meals);
+      })
+    );
   }
 
   addMeal(newMeal) {
