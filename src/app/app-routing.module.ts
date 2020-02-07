@@ -7,13 +7,19 @@ import { MealsListComponent } from './modules/meals-list/meals-list.component';
 import { MealDetailsComponent } from './modules/meal-details/meal-details.component';
 import { NewMealComponent } from './modules/new-meal/new-meal.component';
 import { LoggedGuardService } from './shared/services/logged-guard.service';
+import { CanDeactivateGuardService } from './shared/services/can-deactivate-guard.service';
 
 const routes: Routes = [
   { path: '', component: MealsListComponent, canActivate: [AuthGuardService] },
   { path: 'meals/:id', component: MealDetailsComponent, canActivate: [AuthGuardService] },
   { path: 'new-meal', component: NewMealComponent, canActivate: [AuthGuardService] },
   { path: 'login', component: LoginComponent, canActivate: [LoggedGuardService] },
-  { path: 'signup', component: SignupComponent, canActivate: [LoggedGuardService] },
+  {
+    path: 'signup',
+    component: SignupComponent,
+    canActivate: [LoggedGuardService],
+    canDeactivate: [CanDeactivateGuardService],
+  },
   { path: '', redirectTo: '/', pathMatch: 'full' },
   { path: '**', redirectTo: '/', pathMatch: 'full' },
 ];

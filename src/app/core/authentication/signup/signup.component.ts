@@ -4,7 +4,8 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { debounceTime, map, take, switchMap, takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { SpinnerService } from 'src/app/shared/services/spinner.service';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
+import { CanComponentDeactivate } from 'src/app/shared/services/can-deactivate-guard.service';
 
 class EmailAsyncValidator {
   static email(auth: AuthService) {
@@ -30,10 +31,11 @@ class EmailAsyncValidator {
   templateUrl: './signup.component.html',
   styleUrls: ['./signup.component.scss'],
 })
-export class SignupComponent implements OnInit, OnDestroy {
+export class SignupComponent implements OnInit, OnDestroy, CanComponentDeactivate {
   signupForm: FormGroup;
   signupStatus = '';
   isError = false;
+  isFormSaved = false;
 
   destroy$: Subject<boolean> = new Subject<boolean>();
   isSpinnerOn = false;
@@ -93,6 +95,7 @@ export class SignupComponent implements OnInit, OnDestroy {
         this.isSpinnerOn = false;
         this.isError = false;
         this.signupStatus = 'User was registered';
+        this.isFormSaved = true;
         // setTimeout(() => {
         //   this.router.navigate(['/login']);
         // }, 5000);
@@ -104,6 +107,14 @@ export class SignupComponent implements OnInit, OnDestroy {
         console.log(err);
       }
     );
+  }
+
+  canDeactivate(): boolean | Observable<boolean> | Promise<boolean> {
+    if (this.signupForm.dirty && !this.isFormSaved) {
+      return confirm('Do you want to leave page?');
+    } else {
+      return true;
+    }
   }
 
   ngOnDestroy() {

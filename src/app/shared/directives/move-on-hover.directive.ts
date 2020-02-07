@@ -5,7 +5,7 @@ import { Directive, HostListener, HostBinding, Input, OnInit } from '@angular/co
 })
 export class MoveOnHoverDirective implements OnInit {
   @Input() transitionInput = 'transform .5s';
-  @Input() transformInput = 'translate(-10px, -10px)';
+  @Input() transformInput = 'translate(-5px, -5px)';
   @HostBinding('style.transition') transition;
   @HostBinding('style.transform') transform;
   originalPosition = 'translate(0, 0)';
