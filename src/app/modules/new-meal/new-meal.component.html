@@ -1,10 +1,22 @@
 <div class="newMeal">
   <mat-card>
     <mat-card-header>
-      <mat-card-title>Add new post</mat-card-title>
+      <mat-card-title style="margin-bottom: 0">Add new post</mat-card-title>
     </mat-card-header>
+
+    <app-form-separator></app-form-separator>
+
     <mat-card-content>
-      <form class="newMeal__form" [formGroup]="myForm" (ngSubmit)="onSubmit(myForm)">
+      <p
+        *ngIf="status"
+        [ngClass]="{ newMeal__errorStatus: isError, newMeal__successStatus: !isError }"
+      >
+        {{ status }}
+      </p>
+
+      <app-form-separator *ngIf="status"></app-form-separator>
+
+      <form class="newMeal__form" [formGroup]="newMealForm" (ngSubmit)="onSubmit()">
         <button type="button" color="primary" mat-raised-button (click)="fileInput.click()">
           Choose File
         </button>
@@ -15,18 +27,49 @@
           #fileInput
           type="file"
         />
-        <span class="newMeal__image-name">{{selectedFile ? (selectedFile.name | titlecase) :  "No file choosen"}}</span>
+        <span class="newMeal__image-name">{{
+          selectedFile ? (selectedFile.name | titlecase) : 'No file choosen'
+        }}</span>
 
         <mat-form-field>
-          <input matInput formControlName="name" type="text" placeholder="Name" /> </mat-form-field
-        >
+          <input matInput formControlName="name" type="text" placeholder="Name" />
+          <mat-error
+            *ngIf="timeOfPreparation.errors?.required && timeOfPreparation.touched"
+            align="start"
+            >Enter name of meal</mat-error
+          >
+        </mat-form-field>
         <mat-form-field>
           <input matInput formControlName="desc" type="text" placeholder="Description" />
+          <mat-error
+            *ngIf="timeOfPreparation.errors?.required && timeOfPreparation.touched"
+            align="start"
+            >Enter description</mat-error
+          >
         </mat-form-field>
-        <button mat-raised-button color="primary" type="submit" [disabled]="myForm.invalid">Submit form</button>
+        <mat-form-field>
+          <input
+            matInput
+            formControlName="timeOfPreparation"
+            type="text"
+            placeholder="Time of preparation (minutes)"
+          />
+          <mat-error
+            *ngIf="timeOfPreparation.errors?.required && timeOfPreparation.touched"
+            align="start"
+            >Enter time of preparation</mat-error
+          >
+          <mat-error
+            *ngIf="timeOfPreparation.errors?.pattern && timeOfPreparation.touched"
+            align="start"
+            >Only numbers</mat-error
+          >
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="newMealForm.invalid">
+          Submit form
+        </button>
       </form>
     </mat-card-content>
   </mat-card>
 </div>
-
-

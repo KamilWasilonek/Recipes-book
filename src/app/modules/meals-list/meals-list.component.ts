@@ -13,7 +13,7 @@ import { MealEditComponent } from '../meal-edit/meal-edit.component';
 })
 export class MealsListComponent implements OnInit, OnDestroy {
   meals$: Observable<Meal[]>;
-  meals: Meal[];
+  meals: Meal[] = [];
 
   mealSubscription: Subscription;
 

@@ -31,26 +31,36 @@ export class MealsListService {
   addMeal(newMeal) {
     const url = this.testEndpoint + 'meals';
 
+    const authorId = newMeal.author['_id'];
+    const authorSurname = newMeal.author.surname;
+
     const formData = new FormData();
     formData.append('image', newMeal.image, newMeal.image.name);
     formData.append('name', newMeal.name);
     formData.append('desc', newMeal.desc);
+    formData.append('timeOfPreparation', newMeal.timeOfPreparation);
+    formData.append('authorId', authorId);
+    formData.append('authorName', newMeal.author.name);
+    formData.append('authorSurname', newMeal.author.surname);
 
-    this.http.post(url, formData).subscribe(
-      () => {
-        this.meals.push(newMeal);
-        this.mealsSubject.next(this.meals);
-      },
-      err => {
-        console.log(err);
-      }
+    return this.http.post<Meal>(url, formData).pipe(
+      tap(
+        () => {
+          this.meals.push(newMeal);
+          this.mealsSubject.next(this.meals);
+        },
+        err => {
+          console.log(err);
+        }
+      )
     );
   }
 
   deleteMeal(mealId) {
     this.http.delete(`${this.testEndpoint}meals/${mealId}`).subscribe(
       () => {
-        console.log('Meal deleated');
+        this.meals = this.meals.filter(item => item._id !== mealId);
+        this.mealsSubject.next(this.meals);
       },
       err => {
         console.log(err);

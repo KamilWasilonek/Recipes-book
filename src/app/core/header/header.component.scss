@@ -6,7 +6,8 @@ a {
 }
 
 a:hover, a:active, .active{
-  color: $orangeColor;
+  color: lightgray;
+  text-decoration: underline;
 }
 
 .header {
@@ -14,6 +15,7 @@ a:hover, a:active, .active{
   justify-content: space-between;
   align-self: center;
   padding: 0 5%;
+  background: #234d6f;
 
   &__mobile {
     @media only screen and (min-width: 600px) {

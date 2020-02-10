@@ -1,10 +1,16 @@
-<div class="meals" *ngIf="meals">
-  <app-meal
-    appMoveOnHover
-    *ngFor="let singleMeal of meals"
-    [meal]="singleMeal"
-    (editMeal)="openDialog($event)"
-    (removeMeal)="removeMeal($event)"
-    (goDetails)="goToDetails($event)"
-  ></app-meal>
+<div class="meals">
+  <ng-container *ngIf="meals.length !== 0">
+    <div class="meals__list">
+      <app-meal
+        class="meals__item"
+        appMoveOnHover
+        *ngFor="let singleMeal of meals"
+        [meal]="singleMeal"
+        (editMeal)="openDialog($event)"
+        (removeMeal)="removeMeal($event)"
+        (goDetails)="goToDetails($event)"
+      ></app-meal>
+    </div>
+  </ng-container>
+  <!-- <h1 *ngIf="meals.length === 0" class="meals__empty">Lack of Meals</h1> -->
 </div>

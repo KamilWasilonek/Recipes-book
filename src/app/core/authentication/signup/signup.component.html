@@ -15,7 +15,7 @@
 
     <!-- Form Content -->
     <mat-card-content>
-      <p *ngIf="signupStatus" [ngClass]="{ errorStatus: isError, successStatus: !isError }">
+      <p *ngIf="signupStatus" [ngClass]="{ signup__errorStatus: isError, signup__successStatus: !isError }">
         {{ signupStatus }}
       </p>
 

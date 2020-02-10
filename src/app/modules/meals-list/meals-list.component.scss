@@ -1,6 +1,35 @@
+@import 'main.scss';
+
+
+
 .meals {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  column-gap: 2rem;
-  row-gap: 5rem;
+  @include backgroundImage('/assets/images/wood-bg.jpg');
+  min-height: 100%;
+  padding: 5%;
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    column-gap: 2rem;
+    row-gap: 5rem;
+
+    @include sm {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @include md {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @include lg {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  &__item {
+    margin: 0 auto;
+  }
+
+  &__empty {
+    color: white;
+    text-align: center;
+  }
 }

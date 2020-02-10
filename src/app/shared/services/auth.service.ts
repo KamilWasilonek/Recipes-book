@@ -7,6 +7,7 @@ import { debounceTime, tap } from 'rxjs/operators';
 interface LoginResponse {
   message: string;
   token: string;
+  _id: string;
   email: string;
   name: string;
   surname: string;
@@ -53,6 +54,7 @@ export class AuthService {
           localStorage.setItem(
             'userDetails',
             JSON.stringify({
+              _id: response._id,
               email: response.email,
               name: response.name,
               surname: response.surname,
