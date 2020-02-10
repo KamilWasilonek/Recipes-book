@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
 import { Meal } from 'src/app/shared/models/meal';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-meal',
@@ -23,5 +24,9 @@ export class MealComponent {
 
   goToDetails(mealId) {
     this.goDetails.emit(mealId);
+  }
+
+  checkUser() {
+    return this.meal.author._id === JSON.parse(localStorage.getItem('userDetails'))._id;
   }
 }

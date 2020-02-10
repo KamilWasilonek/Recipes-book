@@ -8,16 +8,28 @@
     src="http://localhost:5000/{{ meal.image }}"
     alt="Meal image"
   />
+
+  <p class="meal__author">{{ meal.author.name }} {{ meal.author.surname }}</p>
+
+  <app-form-separator></app-form-separator>
+
+  <p class="meal__author">Time of preparation: {{ meal.timeOfPreparation }} min</p>
+
+  <app-form-separator></app-form-separator>
+
   <mat-card-content>
     <p class="meal__desc">
       {{ meal.desc | excerpt: 200 }}
     </p>
   </mat-card-content>
+
+  <app-form-separator></app-form-separator>
+
   <mat-card-actions class="meal__actions">
     <button mat-raised-button color="primary" (click)="goToDetails(meal._id)">View more</button>
     <div>
-      <mat-icon class="meal__action" (click)="onMealEdit()">edit</mat-icon>
-      <mat-icon class="meal__action" (click)="onMealRemove()">delete</mat-icon>
+      <mat-icon *ngIf="checkUser()" class="meal__action" (click)="onMealEdit()">edit</mat-icon>
+      <mat-icon *ngIf="checkUser()" class="meal__action" (click)="onMealRemove()">delete</mat-icon>
     </div>
   </mat-card-actions>
 </mat-card>

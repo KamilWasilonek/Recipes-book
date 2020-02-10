@@ -14,10 +14,11 @@ export class SidenavListComponent implements OnInit {
   ngOnInit() {}
 
   logout() {
-    console.log(1);
     this.authService.logoutUser();
-    console.log(5);
     this.sidenavClose.emit();
-    console.log(6);
+  }
+
+  close() {
+    this.sidenavClose.emit();
   }
 }

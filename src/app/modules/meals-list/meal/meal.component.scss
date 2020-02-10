@@ -10,6 +10,14 @@
   max-width: 40rem;
   overflow: hidden;
 
+  &__author {
+    margin: 0;
+    text-align: center;
+    font-style: italic;
+    font-size: 1.4rem;
+    opacity: 0.5;
+  }
+
   &__desc {
     padding: 0 2rem;
   }

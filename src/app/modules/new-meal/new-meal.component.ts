@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MealsListService } from 'src/app/shared/services/meals-list.service';
-import { Meal } from 'src/app/shared/models/meal';
 
 @Component({
   selector: 'app-new-meal',
@@ -19,9 +18,9 @@ export class NewMealComponent implements OnInit {
   ngOnInit() {
     this.newMealForm = this.fb.group({
       image: ['', Validators.required],
-      name: ['sd', Validators.required],
-      desc: ['sds', Validators.required],
-      timeOfPreparation: ['22', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      name: ['', Validators.required],
+      desc: ['', Validators.required],
+      timeOfPreparation: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
     });
   }
 
@@ -48,7 +47,6 @@ export class NewMealComponent implements OnInit {
       () => {
         this.isError = false;
         this.status = 'Meal has been created';
-        this.newMealForm.reset();
       },
       err => {
         this.isError = true;

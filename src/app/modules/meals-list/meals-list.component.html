@@ -1,10 +1,20 @@
 <div class="meals">
   <ng-container *ngIf="meals.length !== 0">
+    <mat-paginator
+      #matPagePaginator
+      class="meals__paginator"
+      [length]="meals.length"
+      [pageIndex]="pageIndex"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      (page)="getNext($event)"
+    >
+    </mat-paginator>
     <div class="meals__list">
       <app-meal
         class="meals__item"
         appMoveOnHover
-        *ngFor="let singleMeal of meals"
+        *ngFor="let singleMeal of currentMeals"
         [meal]="singleMeal"
         (editMeal)="openDialog($event)"
         (removeMeal)="removeMeal($event)"
@@ -12,5 +22,4 @@
       ></app-meal>
     </div>
   </ng-container>
-  <!-- <h1 *ngIf="meals.length === 0" class="meals__empty">Lack of Meals</h1> -->
 </div>

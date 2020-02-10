@@ -1,5 +1,5 @@
 <div class="newMeal">
-  <mat-card>
+  <mat-card class="newMeal__card">
     <mat-card-header>
       <mat-card-title style="margin-bottom: 0">Add new post</mat-card-title>
     </mat-card-header>
@@ -17,6 +17,9 @@
       <app-form-separator *ngIf="status"></app-form-separator>
 
       <form class="newMeal__form" [formGroup]="newMealForm" (ngSubmit)="onSubmit()">
+        <span class="newMeal__image-name">{{
+          selectedFile ? (selectedFile.name | titlecase) : 'No file choosen'
+        }}</span>
         <button type="button" color="primary" mat-raised-button (click)="fileInput.click()">
           Choose File
         </button>
@@ -27,9 +30,6 @@
           #fileInput
           type="file"
         />
-        <span class="newMeal__image-name">{{
-          selectedFile ? (selectedFile.name | titlecase) : 'No file choosen'
-        }}</span>
 
         <mat-form-field>
           <input matInput formControlName="name" type="text" placeholder="Name" />

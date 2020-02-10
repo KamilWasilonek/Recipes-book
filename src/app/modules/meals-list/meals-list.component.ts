@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { MealsListService } from 'src/app/shared/services/meals-list.service';
 import { Subscription, Observable } from 'rxjs';
 import { Meal } from 'src/app/shared/models/meal';
 import { Router } from '@angular/router';
-import { MatDialog, MatDialogConfig } from '@angular/material';
+import { MatDialog, MatDialogConfig, MatPaginator, PageEvent } from '@angular/material';
 import { MealEditComponent } from '../meal-edit/meal-edit.component';
 
 @Component({
@@ -14,6 +14,11 @@ import { MealEditComponent } from '../meal-edit/meal-edit.component';
 export class MealsListComponent implements OnInit, OnDestroy {
   meals$: Observable<Meal[]>;
   meals: Meal[] = [];
+  currentMeals: Meal[] = [];
+
+  pageIndex = 0;
+  pageSize = 4;
+  pageSizeOptions = [4, 8];
 
   mealSubscription: Subscription;
 
@@ -27,12 +32,15 @@ export class MealsListComponent implements OnInit, OnDestroy {
     this.mealsService.getMeals().subscribe(() => {
       this.mealSubscription = this.mealsService.mealsList$.subscribe(meals => {
         this.meals = meals;
+        this.currentMeals = this.meals.slice(
+          this.pageIndex * this.pageSize,
+          (this.pageIndex + 1) * this.pageSize
+        );
       });
     });
   }
 
   goToDetails(mealId) {
-    console.log(mealId);
     this.router.navigate([`meals`, mealId]);
   }
 
@@ -56,6 +64,12 @@ export class MealsListComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy() {}
+
+  getNext(event: PageEvent): void {
+    this.currentMeals = this.meals.slice(
+      event.pageIndex * event.pageSize,
+      (event.pageIndex + 1) * event.pageSize
+    );
   }
 }
