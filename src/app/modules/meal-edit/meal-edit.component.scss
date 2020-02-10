@@ -1,4 +1,19 @@
-.edit-from {
-  display: flex;
-  flex-direction: column;
+.editMeal {
+  font-size: 1.4rem;
+  min-width: 300px;
+
+  ::ng-deep {
+    &.mat-form-field {
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__desc {
+    min-height: 10rem;
+  }
 }

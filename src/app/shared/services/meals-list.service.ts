@@ -3,12 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { Meal } from '../models/meal';
 import { tap } from 'rxjs/operators';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MealsListService {
-  testEndpoint = 'http://localhost:5000/';
+  testEndpoint = 'https://meals-node-api.herokuapp.com/';
   meals = [];
   mealsSubject: BehaviorSubject<Meal[]>;
   mealsList$: Observable<Meal[]>;
@@ -53,6 +54,18 @@ export class MealsListService {
           console.log(err);
         }
       )
+    );
+  }
+
+  updateMeal(mealToUpdate) {
+    console.log(mealToUpdate);
+    return this.http.put(`${this.testEndpoint}meals/${mealToUpdate._id}`, mealToUpdate).pipe(
+      tap(response => {
+        console.log(response);
+        const mealId = this.meals.findIndex(item => item._id === mealToUpdate._id);
+        this.meals[mealId] = mealToUpdate;
+        this.mealsSubject.next(this.meals);
+      })
     );
   }
 

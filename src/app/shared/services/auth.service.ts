@@ -21,7 +21,7 @@ interface SignupResponse {
   providedIn: 'root',
 })
 export class AuthService {
-  testEndpoint = 'http://localhost:5000/';
+  testEndpoint = 'https://meals-node-api.herokuapp.com/';
 
   isUserLogged: boolean;
   loginSubject: BehaviorSubject<boolean>;

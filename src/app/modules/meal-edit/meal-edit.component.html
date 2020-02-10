@@ -1,15 +1,41 @@
-<h2 mat-dialog-title>Edit meal</h2>
+<div class="editMeal">
+  <h2 mat-dialog-title>Edit meal</h2>
 
-<mat-dialog-content class="edit-from" [formGroup]="editForm">
-  <mat-form-field>
-    <input matInput placeholder="Name" formControlName="name" />
-  </mat-form-field>
-  <mat-form-field>
-    <textarea matInput placeholder="Description" formControlName="desc"></textarea>
-  </mat-form-field>
-</mat-dialog-content>
+  <mat-dialog-content class="editMeal__form" [formGroup]="editForm">
+    <mat-form-field>
+      <input matInput placeholder="Name" formControlName="name" />
+      <mat-error *ngIf="name.errors?.required && name.touched" align="start">Enter name</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea
+        class="editMeal__desc"
+        matInput
+        placeholder="Description"
+        formControlName="desc"
+      ></textarea>
+      <mat-error *ngIf="desc.errors?.required && desc.touched" align="start"
+        >Enter description</mat-error
+      >
+    </mat-form-field>
+    <mat-form-field>
+      <input matInput placeholder="Time of preparation" formControlName="timeOfPreparation" />
+      <mat-error
+        *ngIf="timeOfPreparation.errors?.required && timeOfPreparation.touched"
+        align="start"
+        >Enter time of preparation</mat-error
+      >
+      <mat-error
+        *ngIf="timeOfPreparation.errors?.pattern && timeOfPreparation.touched"
+        align="start"
+        >Only numbers</mat-error
+      >
+    </mat-form-field>
+  </mat-dialog-content>
 
-<mat-dialog-actions>
-  <button mat-raised-button (click)="close()">Close</button>
-  <button mat-raised-button color="primary" (click)="save()">Save</button>
-</mat-dialog-actions>
+  <mat-dialog-actions>
+    <button mat-raised-button (click)="close()">Close</button>
+    <button mat-raised-button color="primary" (click)="save()" [disabled]="editForm.invalid">
+      Save
+    </button>
+  </mat-dialog-actions>
+</div>
