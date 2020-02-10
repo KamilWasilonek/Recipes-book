@@ -1,41 +1,24 @@
 @import 'main.scss';
 
-::ng-deep {
-  &.mat-select-arrow,
-  &.mat-select-value,
-  &.mat-paginator-icon {
-    font-size: 1.7rem;
-    color: white;
-  }
-
-  &.mat-form-field {
-    margin-bottom: 0;
-  }
-
-  &.mat-form-field-underline {
-    background: white;
-  }
-
-  &.mat-paginator-page-size-select {
-    margin-bottom: 0;
-  }
-  &.mat-paginator-page-size- > .mat-form-field-wrapper {
-    margin-bottom: 0;
-  }
-  
-  &.mat-form-field-wrapper {
-    padding: 0;
-  }
-
-
-}
-
 .meals {
   @include backgroundImage('/assets/images/wood-bg.jpg');
   background-repeat: repeat;
   background-size: contain;
   min-height: 100%;
   padding: 5%;
+
+  ::ng-deep {
+    &.mat-select-arrow,
+    &.mat-select-value,
+    &.mat-paginator-icon {
+      font-size: 1.7rem;
+      color: white;
+    }
+
+    &.mat-form-field-underline {
+      background: white;
+    }
+  }
 
   &__paginator {
     margin-bottom: 2rem;

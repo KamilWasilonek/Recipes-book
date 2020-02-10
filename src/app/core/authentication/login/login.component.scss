@@ -1,25 +1,24 @@
 @import 'main.scss';
-
-::ng-deep {
-  &.mat-card {
-    min-width: 25rem;
-  }
-
-  &.mat-card-header {
-    justify-content: center;
-  }
-
-  &.mat-form-field {
-    margin-bottom: 1.5rem;
-  }
-}
-
 .login {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100%;
- @include backgroundImage();
+  @include backgroundImage();
+
+  &::ng-deep {
+    &.mat-card {
+      min-width: 25rem;
+    }
+
+    &.mat-card-header {
+      justify-content: center;
+    }
+
+    &.mat-form-field {
+      margin-bottom: 1.5rem;
+    }
+  }
 
   &__signup-navigation {
     width: 100%;

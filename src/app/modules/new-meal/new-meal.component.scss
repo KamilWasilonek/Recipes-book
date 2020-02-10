@@ -1,11 +1,5 @@
 @import 'main.scss';
 
-::ng-deep {
-  &.mat-card-header {
-    justify-content: center;
-  }
-}
-
 .newMeal {
   @include backgroundImage();
   display: flex;
@@ -13,6 +7,12 @@
   align-items: center;
   min-height: 100%;
   padding: 5%;
+
+  ::ng-deep {
+    &.mat-card-header {
+      justify-content: center;
+    }
+  }
 
   &__card {
     width: 100%;

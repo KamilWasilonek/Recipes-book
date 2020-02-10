@@ -1,14 +1,14 @@
 @import 'main.scss';
 
-::ng-deep {
-  &.mat-card-header {
-    justify-content: center;
-  }
-}
-
 .meal {
   max-width: 40rem;
   overflow: hidden;
+
+  ::ng-deep {
+    &.mat-card-header {
+      justify-content: center;
+    }
+  }
 
   &__author {
     margin: 0;
