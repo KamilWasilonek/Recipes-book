@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Meal } from 'src/app/shared/models/meal';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MealsListService } from 'src/app/shared/services/meals-list.service';
+import { MealsService } from 'src/app/shared/services/meals/meals.service';
 
 @Component({
   selector: 'app-meal-edit',
@@ -16,7 +16,7 @@ export class MealEditComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<MealEditComponent>,
-    private mealServiece: MealsListService,
+    private mealServiece: MealsService,
     @Inject(MAT_DIALOG_DATA) data
   ) {
     this.meal = data;

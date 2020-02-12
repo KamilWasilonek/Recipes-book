@@ -6,7 +6,6 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HttpInterceptorService } from './shared/services/http-interceptor.service';
 import { HeaderComponent } from './core/header/header.component';
 import { LoginComponent } from './core/authentication/login/login.component';
 import { SignupComponent } from './core/authentication/signup/signup.component';
@@ -17,6 +16,7 @@ import { SidenavListComponent } from './core/sidenav-list/sidenav-list.component
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MealEditComponent } from './modules/meal-edit/meal-edit.component';
 import { MealComponent } from './modules/meals-list/meal/meal.component';
+import { HttpInterceptorService } from './shared/interceptors/http-interceptor.service';
 
 @NgModule({
   declarations: [

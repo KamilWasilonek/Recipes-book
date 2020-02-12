@@ -2,10 +2,10 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/shared/services/auth.service';
 
-import { CanComponentDeactivate } from 'src/app/shared/services/can-deactivate-guard.service';
 import { EmailAsyncValidator } from 'src/app/shared/validators/emailAsyncValidator';
+import { CanComponentDeactivate } from 'src/app/shared/guards/can-deactivate-guard.service';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -52,10 +52,10 @@ export class SignupComponent implements OnInit, CanComponentDeactivate {
     };
 
     this.authService.signupUser(user).subscribe(
-      () => {
+      response => {
         this.isSpinnerOn = false;
         this.isError = false;
-        this.signupStatus = 'User has been registered';
+        this.signupStatus = response.message;
         this.isFormSaved = true;
         setTimeout(() => {
           this.router.navigate(['/login']);
@@ -64,8 +64,7 @@ export class SignupComponent implements OnInit, CanComponentDeactivate {
       err => {
         this.isSpinnerOn = false;
         this.isError = true;
-        this.signupStatus = 'Signup error';
-        console.log(err);
+        this.signupStatus = err;
       }
     );
   }

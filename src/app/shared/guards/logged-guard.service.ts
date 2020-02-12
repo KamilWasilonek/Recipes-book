@@ -17,7 +17,7 @@ export class LoggedGuardService implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    if (localStorage.getItem('userToken')) {
+    if (localStorage.getItem('user')) {
       return false;
     } else {
       return true;

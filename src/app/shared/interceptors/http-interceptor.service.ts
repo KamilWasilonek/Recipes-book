@@ -1,21 +1,25 @@
 import { Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpResponse } from '@angular/common/http';
+import {
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpResponse,
+  HttpInterceptor,
+} from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { SpinnerService } from './spinner.service';
 import { tap, timeout, delay } from 'rxjs/operators';
+import { SpinnerService } from '../services/spinners/spinner.service';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class HttpInterceptorService {
+@Injectable()
+export class HttpInterceptorService implements HttpInterceptor {
   constructor(private spinnerService: SpinnerService) {}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     this.spinnerService.show();
-    const jwt = localStorage.getItem('userToken');
-    if (jwt) {
+    const user = JSON.parse(localStorage.getItem('user'));
+    if (user) {
       req = req.clone({
         setHeaders: {
-          Authorization: `Bearer ${jwt}`,
+          Authorization: `Bearer ${user.token}`,
         },
       });
     }

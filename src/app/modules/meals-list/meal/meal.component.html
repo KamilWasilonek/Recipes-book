@@ -13,7 +13,7 @@
 
   <app-form-separator></app-form-separator>
 
-  <p class="meal__author">Time of preparation: {{ meal.timeOfPreparation }} min</p>
+  <p class="meal__time">Time of preparation: {{ meal.timeOfPreparation }} min</p>
 
   <app-form-separator></app-form-separator>
 
@@ -27,9 +27,9 @@
 
   <mat-card-actions class="meal__actions">
     <button mat-raised-button color="primary" (click)="goToDetails(meal._id)">View more</button>
-    <div>
-      <mat-icon *ngIf="checkUser()" class="meal__action" (click)="onMealEdit()">edit</mat-icon>
-      <mat-icon *ngIf="checkUser()" class="meal__action" (click)="onMealRemove()">delete</mat-icon>
+    <div *ngIf="checkUser()">
+      <mat-icon class="meal__action" (click)="onMealEdit()">edit</mat-icon>
+      <mat-icon class="meal__action" (click)="onMealRemove()">delete</mat-icon>
     </div>
   </mat-card-actions>
 </mat-card>

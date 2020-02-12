@@ -17,10 +17,10 @@ export class AuthGuardService implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
-    if (localStorage.getItem('userToken')) {
-      return true;
-    } else {
+    if (!JSON.parse(localStorage.getItem('user'))) {
       this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+    } else {
+      return true;
     }
   }
 }

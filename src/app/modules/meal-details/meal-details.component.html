@@ -1,11 +1,34 @@
-<mat-card class="example-card">
-  <mat-card-header>
-    <mat-card-title>Details</mat-card-title>
-  </mat-card-header>
-  <img mat-card-image src="https://meals-node-api.herokuapp.com/{{ meal.image }}" alt="Meal image" />
-  <mat-card-content>
-    <p>
-     {{ meal.desc }}
-    </p>
-  </mat-card-content>
-</mat-card>
+<div class="details">
+  <mat-card class="details__card">
+    <mat-card-header>
+      <mat-card-title>{{ meal.name }}</mat-card-title>
+    </mat-card-header>
+    <img
+      mat-card-image
+      src="https://meals-node-api.herokuapp.com/{{ meal.image }}"
+      alt="Meal image"
+    />
+
+    <p class="details__author">{{ meal.author.name }} {{ meal.author.surname }}</p>
+
+    <app-form-separator></app-form-separator>
+
+    <p class="details__time">Time of preparation: {{ meal.timeOfPreparation }} min</p>
+
+    <app-form-separator></app-form-separator>
+
+    <mat-card-content>
+      <p class="meal__desc">
+        {{ meal.desc }}
+      </p>
+    </mat-card-content>
+
+  
+    <mat-card-actions class="details__actions">
+      <div *ngIf="isAuthor">
+        <mat-icon class="meal__action" (click)="openDialog(meal._id)">edit</mat-icon>
+        <mat-icon class="meal__action" (click)="removeMeal(meal._id)">delete</mat-icon>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</div>

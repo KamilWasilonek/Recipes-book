@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { Meal } from '../models/meal';
 import { tap } from 'rxjs/operators';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Meal } from '../../models/meal';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MealsListService {
-  testEndpoint = 'https://meals-node-api.herokuapp.com/';
+export class MealsService {
+  // const serverUrl = 'https://meals-node-api.herokuapp.com/meals';
+  serverUrl = 'http://localhost:5000/meals';
   meals = [];
   mealsSubject: BehaviorSubject<Meal[]>;
   mealsList$: Observable<Meal[]>;
@@ -17,12 +17,13 @@ export class MealsListService {
   constructor(private http: HttpClient) {
     this.mealsSubject = new BehaviorSubject([]);
     this.mealsList$ = this.mealsSubject.asObservable();
+    this.getMeals().subscribe();
   }
 
   getMeals(): Observable<{ meals: Meal[] }> {
-    const url = this.testEndpoint + 'meals';
-    return this.http.get(url).pipe(
+    return this.http.get(this.serverUrl).pipe(
       tap((data: { meals: Meal[] }) => {
+        console.log(data);
         this.meals = data.meals;
         this.mealsSubject.next(this.meals);
       })
@@ -30,10 +31,7 @@ export class MealsListService {
   }
 
   addMeal(newMeal) {
-    const url = this.testEndpoint + 'meals';
-
     const authorId = newMeal.author['_id'];
-    const authorSurname = newMeal.author.surname;
 
     const formData = new FormData();
     formData.append('image', newMeal.image, newMeal.image.name);
@@ -44,7 +42,7 @@ export class MealsListService {
     formData.append('authorName', newMeal.author.name);
     formData.append('authorSurname', newMeal.author.surname);
 
-    return this.http.post<Meal>(url, formData).pipe(
+    return this.http.post<Meal>(this.serverUrl, formData).pipe(
       tap(
         () => {
           this.meals.push(newMeal);
@@ -58,8 +56,7 @@ export class MealsListService {
   }
 
   updateMeal(mealToUpdate) {
-    console.log(mealToUpdate);
-    return this.http.put(`${this.testEndpoint}meals/${mealToUpdate._id}`, mealToUpdate).pipe(
+    return this.http.put(`${this.serverUrl}${mealToUpdate._id}`, mealToUpdate).pipe(
       tap(response => {
         console.log(response);
         const mealId = this.meals.findIndex(item => item._id === mealToUpdate._id);
@@ -70,14 +67,16 @@ export class MealsListService {
   }
 
   deleteMeal(mealId) {
-    this.http.delete(`${this.testEndpoint}meals/${mealId}`).subscribe(
-      () => {
-        this.meals = this.meals.filter(item => item._id !== mealId);
-        this.mealsSubject.next(this.meals);
-      },
-      err => {
-        console.log(err);
-      }
-    );
+    if (confirm('Are you sure to delete?')) {
+      this.http.delete(`${this.serverUrl}${mealId}`).subscribe(
+        () => {
+          this.meals = this.meals.filter(item => item._id !== mealId);
+          this.mealsSubject.next(this.meals);
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    }
   }
 }

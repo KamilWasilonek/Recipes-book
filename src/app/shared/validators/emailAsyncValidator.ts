@@ -1,6 +1,6 @@
-import { debounceTime, map, take, switchMap, takeUntil } from 'rxjs/operators';
-import { AuthService } from '../services/auth.service';
+import { debounceTime, map, take, switchMap } from 'rxjs/operators';
 import { AbstractControl } from '@angular/forms';
+import { AuthService } from '../services/auth/auth.service';
 
 export class EmailAsyncValidator {
   static email(auth: AuthService) {

@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { AuthService } from 'src/app/shared/services/auth.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SpinnerService } from 'src/app/shared/services/spinner.service';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import { SpinnerService } from 'src/app/shared/services/spinners/spinner.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +13,7 @@ import { SpinnerService } from 'src/app/shared/services/spinner.service';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
-  isLoginError = false;
+  loginErrorMessage = null;
   returnUrl: string;
   isSpinnerOn: boolean;
 
@@ -43,7 +43,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       ],
       password: ['', [Validators.required, Validators.minLength(5)]],
     });
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+
+    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
   }
 
   login() {
@@ -51,16 +52,16 @@ export class LoginComponent implements OnInit, OnDestroy {
       email: this.email.value,
       password: this.password.value,
     };
+
     this.authService
       .loginUser(credentials)
-      .pipe(takeUntil(this.destroy$))
       .subscribe(
         () => {
-          this.isLoginError = false;
+          this.loginErrorMessage = null;
           this.router.navigateByUrl(this.returnUrl ? this.returnUrl : '/');
         },
         err => {
-          this.isLoginError = true;
+          this.loginErrorMessage = err;
         }
       );
   }

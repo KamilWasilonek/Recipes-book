@@ -1,7 +1,6 @@
 <app-spinner *ngIf="isSpinnerOn"></app-spinner>
 <div class="login">
   <mat-card>
-
     <!-- Navigate to login page -->
     <button mat-flat-button color="primary" class="login__signup-navigation" routerLink="/signup">
       Signup
@@ -17,7 +16,7 @@
 
     <!-- Form content -->
     <mat-card-content>
-      <div class="login__error-status" *ngIf="isLoginError">Login failed</div>
+      <div class="login__error-status" *ngIf="loginErrorMessage">{{ loginErrorMessage }}</div>
       <form class="login__form" [formGroup]="loginForm" (ngSubmit)="login()">
         <mat-form-field>
           <input formControlName="email" matInput placeholder="Email" type="text" />

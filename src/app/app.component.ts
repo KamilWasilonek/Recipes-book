@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from './shared/services/auth.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { SpinnerService } from './shared/services/spinner.service';
+import { AuthService } from './shared/services/auth/auth.service';
+import { SpinnerService } from './shared/services/spinners/spinner.service';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +11,7 @@ import { SpinnerService } from './shared/services/spinner.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
   destroy$: Subject<boolean> = new Subject<boolean>();
+
   isSpinnerOn: boolean;
   isUserLogged: boolean;
 
@@ -20,8 +21,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this.spinnerService.loadingStatus$.pipe(takeUntil(this.destroy$)).subscribe(response => {
       this.isSpinnerOn = response;
     });
-    this.authService.loginStatus$.pipe(takeUntil(this.destroy$)).subscribe(status => {
-      this.isUserLogged = status;
+    this.authService.authStatus$.pipe(takeUntil(this.destroy$)).subscribe(user => {
+      this.isUserLogged = !!user;
     });
   }
 

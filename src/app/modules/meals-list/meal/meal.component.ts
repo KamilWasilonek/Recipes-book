@@ -27,6 +27,6 @@ export class MealComponent {
   }
 
   checkUser() {
-    return this.meal.author._id === JSON.parse(localStorage.getItem('userDetails'))._id;
+    return this.meal.author._id === JSON.parse(localStorage.getItem('user'))._id;
   }
 }

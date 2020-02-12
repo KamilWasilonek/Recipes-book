@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
-import { MealsListService } from 'src/app/shared/services/meals-list.service';
 import { Subscription, Observable } from 'rxjs';
 import { Meal } from 'src/app/shared/models/meal';
 import { Router } from '@angular/router';
 import { MatDialog, MatDialogConfig, MatPaginator, PageEvent } from '@angular/material';
 import { MealEditComponent } from '../meal-edit/meal-edit.component';
+import { MealsService } from 'src/app/shared/services/meals/meals.service';
 
 @Component({
   selector: 'app-meals-list',
@@ -23,7 +23,7 @@ export class MealsListComponent implements OnInit, OnDestroy {
   mealSubscription: Subscription;
 
   constructor(
-    private mealsService: MealsListService,
+    private mealsService: MealsService,
     private router: Router,
     private dialog: MatDialog
   ) {}
@@ -59,9 +59,7 @@ export class MealsListComponent implements OnInit, OnDestroy {
 
     const dialogRef = this.dialog.open(MealEditComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe(data => {
-      console.log('OUTPUT: ', data);
-    });
+    dialogRef.afterClosed();
   }
 
   ngOnDestroy() {}
@@ -71,5 +69,7 @@ export class MealsListComponent implements OnInit, OnDestroy {
       event.pageIndex * event.pageSize,
       (event.pageIndex + 1) * event.pageSize
     );
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MealsListService } from 'src/app/shared/services/meals-list.service';
+import { MealsService } from 'src/app/shared/services/meals/meals.service';
 
 @Component({
   selector: 'app-new-meal',
@@ -8,7 +8,7 @@ import { MealsListService } from 'src/app/shared/services/meals-list.service';
   styleUrls: ['./new-meal.component.scss'],
 })
 export class NewMealComponent implements OnInit {
-  constructor(private mealsService: MealsListService, private fb: FormBuilder) {}
+  constructor(private mealsService: MealsService, private fb: FormBuilder) {}
   newMealForm: FormGroup;
   status = '';
   isError: boolean;
