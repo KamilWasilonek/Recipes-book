@@ -7,6 +7,8 @@ import { MealEditComponent } from '../meal-edit/meal-edit.component';
 import { relative } from 'path';
 import { SpinnerService } from 'src/app/shared/services/spinners/spinner.service';
 import { MealsService } from 'src/app/shared/services/meals/meals.service';
+import { environment } from 'src/environments/environment';
+
 
 @Component({
   selector: 'app-meal-details',
@@ -18,6 +20,7 @@ export class MealDetailsComponent implements OnInit, OnDestroy {
   mealId: string;
   mealSubscription: Subscription;
   isAuthor: boolean;
+  serverUrl: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,6 +31,7 @@ export class MealDetailsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.serverUrl = environment.serverUrl;
     this.spinnerService.show();
     this.mealsService.getMeals();
     this.route.params.subscribe(params => {

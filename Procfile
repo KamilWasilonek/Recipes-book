@@ -1,1 +1,1 @@
-ng serve
+web: node server.js

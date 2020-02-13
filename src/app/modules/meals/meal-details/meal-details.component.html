@@ -3,11 +3,7 @@
     <mat-card-header>
       <mat-card-title>{{ meal.name }}</mat-card-title>
     </mat-card-header>
-    <img
-      mat-card-image
-      src="https://meals-node-api.herokuapp.com/{{ meal.image }}"
-      alt="Meal image"
-    />
+    <img mat-card-image [src]="serverUrl + meal.image" alt="Meal image" />
 
     <p class="details__author">{{ meal.author.name }} {{ meal.author.surname }}</p>
 
@@ -23,7 +19,6 @@
       </p>
     </mat-card-content>
 
-  
     <mat-card-actions class="details__actions">
       <div *ngIf="isAuthor">
         <mat-icon class="meal__action" (click)="openDialog(meal._id)">edit</mat-icon>

@@ -5,7 +5,7 @@
   <img
     class="meal__image"
     mat-card-image
-    src="https://meals-node-api.herokuapp.com/{{ meal.image }}"
+    [src]="serverUrl + meal.image"
     alt="Meal image"
   />
 

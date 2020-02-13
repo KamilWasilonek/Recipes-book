@@ -1,5 +1,6 @@
-// const endpoint = 'https://meals-node-api.herokuapp.com/';
-const serverUrl = 'http://localhost:5000/user/';
+import { environment } from 'src/environments/environment';
+
+const serverUrl = `${environment.serverUrl}user/`;
 const endpoints = {
   login: 'login',
   signup: 'signup',

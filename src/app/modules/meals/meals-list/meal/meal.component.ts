@@ -1,18 +1,30 @@
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  ChangeDetectionStrategy,
+  OnInit,
+} from '@angular/core';
 import { Meal } from 'src/app/shared/models/meal';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-meal',
   templateUrl: './meal.component.html',
   styleUrls: ['./meal.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MealComponent {
+export class MealComponent implements OnInit {
   @Input() meal: Meal;
   @Output() removeMeal = new EventEmitter<string>();
   @Output() editMeal = new EventEmitter<string>();
   @Output() goDetails = new EventEmitter<string>();
+  serverUrl: string;
+
+  ngOnInit() {
+    this.serverUrl = environment.serverUrl;
+  }
 
   onMealRemove() {
     this.removeMeal.emit(this.meal._id);

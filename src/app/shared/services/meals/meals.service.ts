@@ -3,13 +3,13 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Meal } from '../../models/meal';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MealsService {
-  // const serverUrl = 'https://meals-node-api.herokuapp.com/meals';
-  serverUrl = 'http://localhost:5000/meals';
+  serverUrl = `${environment.serverUrl}meals/`;
   meals = [];
   mealsSubject: BehaviorSubject<Meal[]>;
   mealsList$: Observable<Meal[]>;
@@ -31,7 +31,7 @@ export class MealsService {
   }
 
   addMeal(newMeal) {
-    const authorId = newMeal.author['_id'];
+    const authorId = newMeal.author._id;
 
     const formData = new FormData();
     formData.append('image', newMeal.image, newMeal.image.name);
