@@ -5,13 +5,15 @@ import { Router } from '@angular/router';
 import { MatDialog, MatDialogConfig, MatPaginator, PageEvent } from '@angular/material';
 import { MealEditComponent } from '../meal-edit/meal-edit.component';
 import { MealsService } from 'src/app/shared/services/meals/meals.service';
+import { SpinnerService } from 'src/app/shared/services/spinners/spinner.service';
+import { EditService } from '../edit.service';
 
 @Component({
   selector: 'app-meals-list',
   templateUrl: './meals-list.component.html',
   styleUrls: ['./meals-list.component.scss'],
 })
-export class MealsListComponent implements OnInit, OnDestroy {
+export class MealsListComponent implements OnInit {
   meals$: Observable<Meal[]>;
   meals: Meal[] = [];
   currentMeals: Meal[] = [];
@@ -25,7 +27,8 @@ export class MealsListComponent implements OnInit, OnDestroy {
   constructor(
     private mealsService: MealsService,
     private router: Router,
-    private dialog: MatDialog
+    private spinnerService: SpinnerService,
+    private editService: EditService
   ) {}
 
   ngOnInit() {
@@ -43,7 +46,7 @@ export class MealsListComponent implements OnInit, OnDestroy {
   }
 
   goToDetails(mealId) {
-    this.router.navigate([`meals`, mealId]);
+    this.router.navigate(['/meals', mealId]);
   }
 
   removeMeal(mealId) {
@@ -51,27 +54,20 @@ export class MealsListComponent implements OnInit, OnDestroy {
   }
 
   openDialog(mealId) {
-    const dialogConfig = new MatDialogConfig();
-
-    const meal = this.mealsService.meals.filter(item => item._id === mealId)[0];
-
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.data = meal;
-
-    const dialogRef = this.dialog.open(MealEditComponent, dialogConfig);
-
-    dialogRef.afterClosed();
+    const meal = this.mealsService.getSingleMeal(mealId);
+    this.editService.openDialog(meal);
   }
 
-  ngOnDestroy() {}
-
   getNext(event: PageEvent): void {
-    this.currentMeals = this.meals.slice(
-      event.pageIndex * event.pageSize,
-      (event.pageIndex + 1) * event.pageSize
-    );
-    this.pageIndex = event.pageIndex;
-    this.pageSize = event.pageSize;
+    this.spinnerService.show();
+    setTimeout(() => {
+      this.currentMeals = this.meals.slice(
+        event.pageIndex * event.pageSize,
+        (event.pageIndex + 1) * event.pageSize
+      );
+      this.pageIndex = event.pageIndex;
+      this.pageSize = event.pageSize;
+      this.spinnerService.hide();
+    }, 300);
   }
 }

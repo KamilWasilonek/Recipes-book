@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Meal } from '../../models/meal';
 import { environment } from 'src/environments/environment';
@@ -23,7 +23,6 @@ export class MealsService {
   getMeals(): Observable<{ meals: Meal[] }> {
     return this.http.get(this.serverUrl).pipe(
       tap((data: { meals: Meal[] }) => {
-        console.log(data);
         this.meals = data.meals;
         this.mealsSubject.next(this.meals);
       })
@@ -57,8 +56,7 @@ export class MealsService {
 
   updateMeal(mealToUpdate) {
     return this.http.put(`${this.serverUrl}${mealToUpdate._id}`, mealToUpdate).pipe(
-      tap(response => {
-        console.log(response);
+      tap(() => {
         const mealId = this.meals.findIndex(item => item._id === mealToUpdate._id);
         this.meals[mealId] = mealToUpdate;
         this.mealsSubject.next(this.meals);
@@ -68,19 +66,23 @@ export class MealsService {
 
   deleteMeal(mealId) {
     if (confirm('Are you sure to delete?')) {
-      this.http.delete(`${this.serverUrl}${mealId}`).subscribe(
-        () => {
-          this.meals = this.meals.filter(item => item._id !== mealId);
-          this.mealsSubject.next(this.meals);
-        },
-        err => {
-          console.log(err);
-        }
+      return this.http.delete(`${this.serverUrl}${mealId}`).pipe(
+        tap(
+          () => {
+            this.meals = this.meals.filter(item => item._id !== mealId);
+            this.mealsSubject.next(this.meals);
+          },
+          err => {
+            console.log(err);
+          }
+        )
       );
+    } else {
+      throwError('Canceled');
     }
   }
 
-  getSingleMeal(mealId) {
+  getSingleMeal(mealId: string): Meal {
     return this.meals[this.meals.findIndex(item => item._id === mealId)];
   }
 }

@@ -1,5 +1,7 @@
 .editMeal {
   font-size: 1.4rem;
+  min-width: 50rem;
+  width: 100vw;
 
   ::ng-deep {
     &.mat-form-field {

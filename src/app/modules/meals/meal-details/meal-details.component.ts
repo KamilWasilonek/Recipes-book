@@ -1,13 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, concat } from 'rxjs';
 import { Meal } from 'src/app/shared/models/meal';
-import { MatDialogConfig, MatDialog } from '@angular/material';
-import { MealEditComponent } from '../meal-edit/meal-edit.component';
-import { relative } from 'path';
 import { SpinnerService } from 'src/app/shared/services/spinners/spinner.service';
 import { MealsService } from 'src/app/shared/services/meals/meals.service';
 import { environment } from 'src/environments/environment';
+import { tap } from 'rxjs/operators';
+import { EditService } from '../edit.service';
 
 @Component({
   selector: 'app-meal-details',
@@ -15,7 +14,8 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./meal-details.component.scss'],
 })
 export class MealDetailsComponent implements OnInit, OnDestroy {
-  meal: Meal;
+  meal: Meal = null;
+  mealId: string;
   mealSubscription: Subscription;
   isAuthor: boolean;
   serverUrl: string;
@@ -25,7 +25,7 @@ export class MealDetailsComponent implements OnInit, OnDestroy {
     private router: Router,
     private mealsService: MealsService,
     private spinnerService: SpinnerService,
-    private dialog: MatDialog
+    private editService: EditService
   ) {}
 
   ngOnInit() {
@@ -33,28 +33,35 @@ export class MealDetailsComponent implements OnInit, OnDestroy {
 
     this.spinnerService.show();
 
-    this.route.params.subscribe(params => {
-      this.meal = this.mealsService.getSingleMeal(params.id);
-      this.isAuthor = this.meal.author._id === JSON.parse(localStorage.getItem('user'))._id;
-      this.spinnerService.hide();
+    this.mealSubscription = this.mealsService.mealsList$.subscribe(res => {
+      if (res !== null) {
+        this.meal = this.mealsService.getSingleMeal(this.route.snapshot.params.id);
+        if (this.meal) {
+          this.isAuthor = this.meal.author._id === JSON.parse(localStorage.getItem('user'))._id;
+          this.openDialog();
+        }
+        this.spinnerService.hide();
+      }
     });
   }
 
   removeMeal(mealId) {
-    this.mealsService.deleteMeal(mealId);
-    this.router.navigate(['../', { relativeTo: this.route }]);
+    this.mealsService.deleteMeal(mealId).subscribe(
+      () => {
+        this.router.navigate(['/meals']);
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
   openDialog() {
-    const dialogConfig = new MatDialogConfig();
+    this.editService.openDialog(this.meal);
+  }
 
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.data = this.meal;
-
-    const dialogRef = this.dialog.open(MealEditComponent, dialogConfig);
-
-    dialogRef.afterClosed();
+  backToList() {
+    this.router.navigate(['/meals']);
   }
 
   ngOnDestroy() {

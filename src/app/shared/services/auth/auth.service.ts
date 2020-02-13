@@ -53,9 +53,8 @@ export class AuthService {
         return throwError('Auth failed');
       }),
       tap(response => {
-        console.log(response);
         const user: User = {
-          id: response._id,
+          _id: response._id,
           token: response.token,
           email: response.email,
           name: response.name,

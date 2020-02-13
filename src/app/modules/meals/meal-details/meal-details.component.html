@@ -1,4 +1,4 @@
-<div class="details">
+<div class="details" *ngIf="meal">
   <mat-card class="details__card">
     <mat-card-header>
       <mat-card-title>{{ meal.name }}</mat-card-title>
@@ -20,9 +20,10 @@
     </mat-card-content>
 
     <mat-card-actions class="details__actions">
+      <button mat-raised-button color="primary" (click)="backToList()">Back to list</button>
       <div *ngIf="isAuthor">
-        <mat-icon class="meal__action" (click)="openDialog(meal._id)">edit</mat-icon>
-        <mat-icon class="meal__action" (click)="removeMeal(meal._id)">delete</mat-icon>
+        <mat-icon class="details__action" (click)="openDialog()">edit</mat-icon>
+        <mat-icon class="details__action" (click)="removeMeal(meal._id)">delete</mat-icon>
       </div>
     </mat-card-actions>
   </mat-card>
