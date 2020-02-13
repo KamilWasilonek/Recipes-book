@@ -9,10 +9,10 @@
       class="header__menu-list-item"
       routerLinkActive="active"
       [routerLinkActiveOptions]="{ exact: true }"
-      routerLink="/"
+      routerLink="/meals"
       >Meals</a
     >
-    <a class="header__menu-list-item" routerLinkActive="active" routerLink="/new-meal">New meal</a>
+    <a class="header__menu-list-item" routerLinkActive="active" routerLink="meals/new">New meal</a>
   </div>
   <div class="header__logout">
     <a mat-list-item (click)="logout()" routerLink="/login">

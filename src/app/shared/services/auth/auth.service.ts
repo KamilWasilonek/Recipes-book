@@ -21,9 +21,7 @@ export class AuthService {
   userSubject: BehaviorSubject<User>;
   authStatus$: Observable<User>;
 
-  constructor(private http: HttpClient) {
-    this.autoLogin();
-  }
+  constructor(private http: HttpClient) {}
 
   autoLogin() {
     const user: User = JSON.parse(localStorage.getItem('user'));
@@ -52,10 +50,10 @@ export class AuthService {
   loginUser(credentials: { email: string; password: string }) {
     return this.http.post<AuthResponse>(URL.loginURL, credentials).pipe(
       catchError(() => {
-        localStorage.setItem('user', null);
         return throwError('Auth failed');
       }),
       tap(response => {
+        console.log(response);
         const user: User = {
           id: response._id,
           token: response.token,

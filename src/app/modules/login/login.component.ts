@@ -53,17 +53,15 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: this.password.value,
     };
 
-    this.authService
-      .loginUser(credentials)
-      .subscribe(
-        () => {
-          this.loginErrorMessage = null;
-          this.router.navigateByUrl(this.returnUrl ? this.returnUrl : '/');
-        },
-        err => {
-          this.loginErrorMessage = err;
-        }
-      );
+    this.authService.loginUser(credentials).subscribe(
+      () => {
+        this.loginErrorMessage = null;
+        this.router.navigate(['/meals']);
+      },
+      err => {
+        this.loginErrorMessage = err;
+      }
+    );
   }
 
   get email() {

@@ -49,7 +49,7 @@ export class MealDetailsComponent implements OnInit, OnDestroy {
 
   removeMeal(mealId) {
     this.mealsService.deleteMeal(mealId);
-    this.router.navigate(['.../', { relativeTo: this.route }]);
+    this.router.navigate(['../', { relativeTo: this.route }]);
   }
 
   openDialog(mealId) {

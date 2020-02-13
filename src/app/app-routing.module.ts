@@ -1,31 +1,35 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { MealsListComponent } from './modules/meals-list/meals-list.component';
+import { Routes, RouterModule, PreloadingStrategy, PreloadAllModules } from '@angular/router';
+
+import { MealsModule } from './modules/meals/meals.module';
 import { AuthGuardService } from './shared/guards/auth-guard.service';
-import { MealDetailsComponent } from './modules/meal-details/meal-details.component';
-import { NewMealComponent } from './modules/new-meal/new-meal.component';
-import { LoginComponent } from './core/authentication/login/login.component';
+import { NotFoundPageComponent } from './core/not-found-page/not-found-page.component';
+import { SignupModule } from './modules/signup/signup.module';
+import { LoginModule } from './modules/login/login.module';
 import { LoggedGuardService } from './shared/guards/logged-guard.service';
-import { SignupComponent } from './core/authentication/signup/signup.component';
-import { CanDeactivateGuardService } from './shared/guards/can-deactivate-guard.service';
 
 const routes: Routes = [
-  { path: '', component: MealsListComponent, canActivate: [AuthGuardService] },
-  { path: 'meals/:id', component: MealDetailsComponent, canActivate: [AuthGuardService] },
-  { path: 'new-meal', component: NewMealComponent, canActivate: [AuthGuardService] },
-  { path: 'login', component: LoginComponent, canActivate: [LoggedGuardService] },
+  {
+    path: 'meals',
+    loadChildren: () => import('./modules/meals/meals.module').then(m => MealsModule),
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./modules/login/login.module').then(m => LoginModule),
+    canActivate: [LoggedGuardService],
+  },
   {
     path: 'signup',
-    component: SignupComponent,
+    loadChildren: () => import('./modules/signup/signup.module').then(m => SignupModule),
     canActivate: [LoggedGuardService],
-    canDeactivate: [CanDeactivateGuardService],
   },
-  { path: '', redirectTo: '/', pathMatch: 'full' },
-  { path: '**', redirectTo: '/', pathMatch: 'full' },
+  { path: '', redirectTo: '/meals', pathMatch: 'full' },
+  { path: '**', component: NotFoundPageComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
   exports: [RouterModule],
 })
 export class AppRoutingModule {}
