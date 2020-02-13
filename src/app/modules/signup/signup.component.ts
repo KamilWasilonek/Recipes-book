@@ -14,7 +14,7 @@ import { AuthService } from 'src/app/shared/services/auth/auth.service';
 })
 export class SignupComponent implements OnInit, CanComponentDeactivate {
   signupForm: FormGroup;
-  signupStatus = '';
+  signupStatus = null;
   isError = false;
   isFormSaved = false;
   isSpinnerOn = false;
@@ -22,14 +22,17 @@ export class SignupComponent implements OnInit, CanComponentDeactivate {
   constructor(private authService: AuthService, private fb: FormBuilder, private router: Router) {}
 
   ngOnInit() {
+    this.createSignupForm();
+  }
+
+  createSignupForm() {
     this.signupForm = this.fb.group({
       email: [
         '',
         [
           Validators.required,
           Validators.pattern(
-            // tslint:disable-next-line: max-line-length
-            "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
+            '^([0-9a-zA-Z]([-.w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-w]*[0-9a-zA-Z].)+[a-zA-Z]{2,3})$'
           ),
         ],
         EmailAsyncValidator.email(this.authService),
@@ -41,7 +44,7 @@ export class SignupComponent implements OnInit, CanComponentDeactivate {
   }
 
   signup() {
-    this.signupStatus = '';
+    this.signupStatus = this.signupStatus;
     this.isSpinnerOn = true;
 
     const user = {

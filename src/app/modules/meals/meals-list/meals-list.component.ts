@@ -29,14 +29,16 @@ export class MealsListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.mealsService.getMeals().subscribe(() => {
-      this.mealSubscription = this.mealsService.mealsList$.subscribe(meals => {
-        this.meals = meals;
-        this.currentMeals = this.meals.slice(
-          this.pageIndex * this.pageSize,
-          (this.pageIndex + 1) * this.pageSize
-        );
-      });
+    this.loadMeals();
+  }
+
+  loadMeals() {
+    this.mealSubscription = this.mealsService.mealsList$.subscribe(meals => {
+      this.meals = meals;
+      this.currentMeals = this.meals.slice(
+        this.pageIndex * this.pageSize,
+        (this.pageIndex + 1) * this.pageSize
+      );
     });
   }
 

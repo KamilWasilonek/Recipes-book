@@ -23,6 +23,10 @@ export class MealEditComponent implements OnInit {
   }
 
   ngOnInit() {
+   this.createEditForm();
+  }
+
+  createEditForm() {
     this.editForm = this.fb.group({
       name: [this.meal.name, Validators.required],
       desc: [this.meal.desc, Validators.required],
@@ -41,7 +45,6 @@ export class MealEditComponent implements OnInit {
       desc: this.desc.value,
       timeOfPreparation: this.timeOfPreparation.value,
     };
-    console.log(meal);
     this.mealServiece.updateMeal(meal).subscribe();
   }
 

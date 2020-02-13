@@ -79,4 +79,8 @@ export class MealsService {
       );
     }
   }
+
+  getSingleMeal(mealId) {
+    return this.meals[this.meals.findIndex(item => item._id === mealId)];
+  }
 }

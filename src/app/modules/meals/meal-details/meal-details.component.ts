@@ -9,7 +9,6 @@ import { SpinnerService } from 'src/app/shared/services/spinners/spinner.service
 import { MealsService } from 'src/app/shared/services/meals/meals.service';
 import { environment } from 'src/environments/environment';
 
-
 @Component({
   selector: 'app-meal-details',
   templateUrl: './meal-details.component.html',
@@ -17,7 +16,6 @@ import { environment } from 'src/environments/environment';
 })
 export class MealDetailsComponent implements OnInit, OnDestroy {
   meal: Meal;
-  mealId: string;
   mealSubscription: Subscription;
   isAuthor: boolean;
   serverUrl: string;
@@ -32,23 +30,14 @@ export class MealDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.serverUrl = environment.serverUrl;
-    this.spinnerService.show();
-    this.mealsService.getMeals();
-    this.route.params.subscribe(params => {
-      this.mealId = params.id;
-    });
-    this.mealSubscription = this.mealsService.mealsList$.subscribe(res => {
-      if (res.length !== 0) {
-        this.meal = this.mealsService.meals.filter(meal => meal._id === this.mealId)[0];
-        this.spinnerService.hide();
-        this.isAuthor =
-          this.meal.author._id === JSON.parse(localStorage.getItem('userDetails'))._id;
-      }
-    });
-  }
 
-  ngOnDestroy() {
-    this.mealSubscription.unsubscribe();
+    this.spinnerService.show();
+
+    this.route.params.subscribe(params => {
+      this.meal = this.mealsService.getSingleMeal(params.id);
+      this.isAuthor = this.meal.author._id === JSON.parse(localStorage.getItem('user'))._id;
+      this.spinnerService.hide();
+    });
   }
 
   removeMeal(mealId) {
@@ -56,17 +45,19 @@ export class MealDetailsComponent implements OnInit, OnDestroy {
     this.router.navigate(['../', { relativeTo: this.route }]);
   }
 
-  openDialog(mealId) {
+  openDialog() {
     const dialogConfig = new MatDialogConfig();
-
-    const meal = this.mealsService.meals.filter(item => item._id === mealId)[0];
 
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.data = meal;
+    dialogConfig.data = this.meal;
 
     const dialogRef = this.dialog.open(MealEditComponent, dialogConfig);
 
     dialogRef.afterClosed();
+  }
+
+  ngOnDestroy() {
+    this.mealSubscription.unsubscribe();
   }
 }

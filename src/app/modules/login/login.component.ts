@@ -28,23 +28,33 @@ export class LoginComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.controlSpinner();
+
+    this.createLoginForm();
+
+    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
+  }
+
+  controlSpinner() {
     this.spinnerService.loadingStatus$.pipe(takeUntil(this.destroy$)).subscribe(response => {
       this.isSpinnerOn = response;
     });
+  }
 
+  createLoginForm() {
     this.loginForm = this.fb.group({
       email: [
         '',
         [
           Validators.required,
           Validators.email,
-          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+          Validators.pattern(
+            '^([0-9a-zA-Z]([-.w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-w]*[0-9a-zA-Z].)+[a-zA-Z]{2,3})$'
+          ),
         ],
       ],
       password: ['', [Validators.required, Validators.minLength(5)]],
     });
-
-    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
   }
 
   login() {

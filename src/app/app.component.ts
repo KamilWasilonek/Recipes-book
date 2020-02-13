@@ -19,10 +19,17 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.authService.autoLogin();
+    this.constrolSpinner();
+    this.checkLoginStatus();
+  }
 
+  constrolSpinner() {
     this.spinnerService.loadingStatus$.pipe(takeUntil(this.destroy$)).subscribe(response => {
       this.isSpinnerOn = response;
     });
+  }
+
+  checkLoginStatus() {
     this.authService.authStatus$.pipe(takeUntil(this.destroy$)).subscribe(user => {
       this.isUserLogged = !!user;
     });

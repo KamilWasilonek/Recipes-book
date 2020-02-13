@@ -10,12 +10,16 @@ import { MealsService } from 'src/app/shared/services/meals/meals.service';
 export class NewMealComponent implements OnInit {
   constructor(private mealsService: MealsService, private fb: FormBuilder) {}
   newMealForm: FormGroup;
-  status = '';
+  creationStatus = null;
   isError: boolean;
 
   selectedFile: File = null;
 
   ngOnInit() {
+    this.createNewMealForm();
+  }
+
+  createNewMealForm() {
     this.newMealForm = this.fb.group({
       image: ['', Validators.required],
       name: ['', Validators.required],
@@ -29,8 +33,8 @@ export class NewMealComponent implements OnInit {
   }
 
   onSubmit() {
-    this.status = '';
-    const currentUser = JSON.parse(localStorage.getItem('userDetails'));
+    this.creationStatus = null;
+    const currentUser = JSON.parse(localStorage.getItem('user'));
     const newMeal = {
       image: this.selectedFile,
       name: this.name.value,
@@ -46,11 +50,15 @@ export class NewMealComponent implements OnInit {
     this.mealsService.addMeal(newMeal).subscribe(
       () => {
         this.isError = false;
-        this.status = 'Meal has been created';
+        this.creationStatus = 'Meal has been created';
+        this.newMealForm.reset();
+        Object.keys(this.newMealForm.controls).forEach(key => {
+          this.newMealForm.controls[key].setErrors(null);
+        });
       },
       err => {
         this.isError = true;
-        this.status = 'Meal can not be added, Try later';
+        this.creationStatus = 'Meal can not be added, Try later';
       }
     );
   }

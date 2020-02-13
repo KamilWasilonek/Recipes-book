@@ -8,10 +8,10 @@
 
     <mat-card-content>
       <p
-        *ngIf="status"
+        *ngIf="creationStatus"
         [ngClass]="{ newMeal__errorStatus: isError, newMeal__successStatus: !isError }"
       >
-        {{ status }}
+        {{ creationStatus }}
       </p>
 
       <app-form-separator *ngIf="status"></app-form-separator>

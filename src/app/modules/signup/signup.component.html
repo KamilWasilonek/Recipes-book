@@ -15,7 +15,10 @@
 
     <!-- Form Content -->
     <mat-card-content>
-      <p *ngIf="signupStatus" [ngClass]="{ signup__errorStatus: isError, signup__successStatus: !isError }">
+      <p
+        *ngIf="signupStatus"
+        [ngClass]="{ signup__errorStatus: isError, signup__successStatus: !isError }"
+      >
         {{ signupStatus }}
       </p>
 
@@ -23,7 +26,13 @@
 
       <form class="signup__form" [formGroup]="signupForm" (ngSubmit)="signup()">
         <mat-form-field>
-          <input formControlName="email" matInput placeholder="Email" type="text" />
+          <input
+            formControlName="email"
+            matInput
+            placeholder="Email"
+            type="text"
+            autocomplete="off"
+          />
           <mat-error *ngIf="email.errors?.required && email.touched" align="start"
             >Enter you email</mat-error
           >
@@ -36,7 +45,13 @@
         </mat-form-field>
 
         <mat-form-field>
-          <input formControlName="password" matInput placeholder="Password" type="password" />
+          <input
+            formControlName="password"
+            matInput
+            placeholder="Password"
+            type="password"
+            autocomplete="off"
+          />
           <mat-error *ngIf="password.errors?.required && password.touched" align="start"
             >Enter you password</mat-error
           >
