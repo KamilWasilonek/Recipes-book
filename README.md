@@ -8,7 +8,7 @@ https://course-262512.firebaseapp.com
 The project uses API deployed on heroku:
 https://github.com/KamilWasilonek/Node_API
 
-The project was developed using angular and his most important functionalities such as:
+The project was developed using Angular and his most important functionalities such as:
 - TypeScript
 - Components architecture
 - Directives
