@@ -1,5 +1,5 @@
 # Recipe book
-This project allow to store recipies with the most imporant details(description, time of preparation). To see recipies it is obligatory to register and then login. All recipies are visible for everyone but only author of the recipie can modify it.
+This project allow to store recipes with the most imporant details(description, time of preparation). To see recipes it is obligatory to register and then login. All recipes are visible for everyone but only author of the recipie can modify it.
 
 # Project live
 The project use firebase hoisting:
