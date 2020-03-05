@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject, throwError } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, BehaviorSubject, throwError, from } from 'rxjs';
+import {
+  tap,
+  switchMap,
+} from 'rxjs/operators';
 import { Meal } from '../../models/meal';
 import { environment } from 'src/environments/environment';
+import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +18,18 @@ export class MealsService {
   mealsSubject: BehaviorSubject<Meal[]>;
   mealsList$: Observable<Meal[]>;
 
-  constructor(private http: HttpClient) {
+  task: AngularFireUploadTask;
+  ref;
+  uploadProgress;
+
+  percentage: Observable<number>;
+  snapshot: Observable<any>;
+  downloadURL: string;
+
+  constructor(
+    private http: HttpClient,
+    private afStorage: AngularFireStorage
+  ) {
     this.mealsSubject = new BehaviorSubject([]);
     this.mealsList$ = this.mealsSubject.asObservable();
     this.getMeals().subscribe();
@@ -30,26 +45,44 @@ export class MealsService {
   }
 
   addMeal(newMeal) {
-    const authorId = newMeal.author._id;
+    return this.uploadMealImage(newMeal.image).pipe(
+      switchMap(url => {
+        newMeal = {
+          ...newMeal,
+          image: url,
+        };
 
-    const formData = new FormData();
-    formData.append('image', newMeal.image, newMeal.image.name);
-    formData.append('name', newMeal.name);
-    formData.append('desc', newMeal.desc);
-    formData.append('timeOfPreparation', newMeal.timeOfPreparation);
-    formData.append('authorId', authorId);
-    formData.append('authorName', newMeal.author.name);
-    formData.append('authorSurname', newMeal.author.surname);
+        return this.http.post<{ meal: Meal }>(this.serverUrl, newMeal).pipe(
+          tap(
+            response => {
+              this.meals.push(response.meal);
+              this.mealsSubject.next(this.meals);
+            }
+          )
+        );
+      })
+    );
+  }
 
-    return this.http.post<Meal>(this.serverUrl, formData).pipe(
+  saveMeal(meal, form) {
+    return this.http.post<Meal>(this.serverUrl, form).pipe(
       tap(
         () => {
-          this.meals.push(newMeal);
+          this.meals.push(meal);
           this.mealsSubject.next(this.meals);
         },
-        err => {
-          console.log(err);
-        }
+      )
+    );
+  }
+
+  private uploadMealImage(image: File) {
+    this.ref = this.afStorage.ref(image.name);
+
+    return from(
+      from(this.ref.put(image)).pipe(
+        switchMap((response: any) => {
+          return response.ref.getDownloadURL();
+        })
       )
     );
   }
@@ -72,9 +105,6 @@ export class MealsService {
             this.meals = this.meals.filter(item => item._id !== mealId);
             this.mealsSubject.next(this.meals);
           },
-          err => {
-            console.log(err);
-          }
         )
       );
     } else {

@@ -11,6 +11,11 @@ import { SidenavListComponent } from './core/sidenav-list/sidenav-list.component
 import { HeaderComponent } from './core/header/header.component';
 import { NotFoundPageComponent } from './core/not-found-page/not-found-page.component';
 
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+
 @NgModule({
   declarations: [AppComponent, HeaderComponent, SidenavListComponent, NotFoundPageComponent],
   imports: [
@@ -19,6 +24,9 @@ import { NotFoundPageComponent } from './core/not-found-page/not-found-page.comp
     BrowserAnimationsModule,
     SharedModule,
     HttpClientModule,
+    AngularFirestoreModule, // firestore
+    AngularFireAuthModule, // auth
+    AngularFireStorageModule, // storage
   ],
   providers: [{ provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true }],
   bootstrap: [AppComponent],

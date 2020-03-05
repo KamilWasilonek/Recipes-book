@@ -7,7 +7,7 @@ import {
   HttpInterceptor,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { tap, timeout, delay } from 'rxjs/operators';
+import { tap} from 'rxjs/operators';
 import { SpinnerService } from '../services/spinners/spinner.service';
 
 @Injectable()
@@ -24,11 +24,7 @@ export class HttpInterceptorService implements HttpInterceptor {
       });
     }
 
-    const timeoutValue = 5000;
-
     return next.handle(req).pipe(
-      delay(500),
-      timeout(timeoutValue),
       tap(
         (event: HttpEvent<any>) => {
           if (event instanceof HttpResponse) {

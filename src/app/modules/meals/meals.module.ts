@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { MealsListComponent } from './meals-list/meals-list.component';
 import { MealDetailsComponent } from './meal-details/meal-details.component';
@@ -18,7 +19,7 @@ import { EditService } from './edit.service';
     MealEditComponent,
     MealComponent,
   ],
-  imports: [MealsRoutingModule, SharedModule, HttpClientModule],
+  imports: [MealsRoutingModule, SharedModule, HttpClientModule, FormsModule],
   providers: [EditService],
   entryComponents: [MealEditComponent],
 })

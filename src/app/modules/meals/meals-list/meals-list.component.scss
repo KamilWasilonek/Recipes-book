@@ -20,6 +20,16 @@
     }
   }
 
+  &__search-input {
+    display: block;
+    max-width: 20rem;
+    margin-left: auto;
+    margin-right: 1.5rem;
+    padding: 0.5rem;
+    background-color: #fff;
+    font-size: 16px;
+  }
+
   &__paginator {
     margin-bottom: 2rem;
     color: white;
@@ -45,7 +55,9 @@
   }
 
   &__item {
-    margin: 0 auto;
+    @include xs {
+      margin: 0 auto;
+    }
   }
 
   &__empty {

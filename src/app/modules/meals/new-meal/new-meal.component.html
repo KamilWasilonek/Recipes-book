@@ -14,7 +14,7 @@
         {{ creationStatus }}
       </p>
 
-      <app-form-separator *ngIf="status"></app-form-separator>
+      <app-form-separator *ngIf="creationStatus"></app-form-separator>
 
       <form class="newMeal__form" [formGroup]="newMealForm" (ngSubmit)="onSubmit()">
         <span class="newMeal__image-name">{{
@@ -40,7 +40,7 @@
           >
         </mat-form-field>
         <mat-form-field>
-          <input matInput formControlName="desc" type="text" placeholder="Description" />
+          <textarea matInput formControlName="desc" type="text" placeholder="Description"></textarea>
           <mat-error
             *ngIf="timeOfPreparation.errors?.required && timeOfPreparation.touched"
             align="start"

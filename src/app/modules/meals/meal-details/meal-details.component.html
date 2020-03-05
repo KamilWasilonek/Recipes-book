@@ -3,7 +3,7 @@
     <mat-card-header>
       <mat-card-title>{{ meal.name }}</mat-card-title>
     </mat-card-header>
-    <img mat-card-image [src]="serverUrl + meal.image" alt="Meal image" />
+    <img mat-card-image [src]="meal.image" alt="Meal image" />
 
     <p class="details__author">{{ meal.author.name }} {{ meal.author.surname }}</p>
 

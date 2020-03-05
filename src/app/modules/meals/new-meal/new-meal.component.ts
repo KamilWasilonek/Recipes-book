@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MealsService } from 'src/app/shared/services/meals/meals.service';
+import { SpinnerService } from 'src/app/shared/services/spinners/spinner.service';
 
 @Component({
   selector: 'app-new-meal',
@@ -8,7 +9,11 @@ import { MealsService } from 'src/app/shared/services/meals/meals.service';
   styleUrls: ['./new-meal.component.scss'],
 })
 export class NewMealComponent implements OnInit {
-  constructor(private mealsService: MealsService, private fb: FormBuilder) {}
+  constructor(
+    private spinnerService: SpinnerService,
+    private mealsService: MealsService,
+    private fb: FormBuilder
+  ) {}
   newMealForm: FormGroup;
   creationStatus = null;
   isError: boolean;
@@ -33,6 +38,7 @@ export class NewMealComponent implements OnInit {
   }
 
   onSubmit() {
+    this.spinnerService.show();
     this.creationStatus = null;
     const currentUser = JSON.parse(localStorage.getItem('user'));
     const newMeal = {
@@ -55,10 +61,12 @@ export class NewMealComponent implements OnInit {
         Object.keys(this.newMealForm.controls).forEach(key => {
           this.newMealForm.controls[key].setErrors(null);
         });
+        this.spinnerService.hide();
       },
       err => {
         this.isError = true;
         this.creationStatus = 'Meal can not be added, Try later';
+        this.spinnerService.hide();
       }
     );
   }

@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy} from '@angular/core';
 import { Subscription, Observable } from 'rxjs';
 import { Meal } from 'src/app/shared/models/meal';
 import { Router } from '@angular/router';
-import { MatDialog, MatDialogConfig, MatPaginator, PageEvent } from '@angular/material';
-import { MealEditComponent } from '../meal-edit/meal-edit.component';
+import { PageEvent } from '@angular/material';
 import { MealsService } from 'src/app/shared/services/meals/meals.service';
 import { SpinnerService } from 'src/app/shared/services/spinners/spinner.service';
 import { EditService } from '../edit.service';
@@ -13,7 +12,7 @@ import { EditService } from '../edit.service';
   templateUrl: './meals-list.component.html',
   styleUrls: ['./meals-list.component.scss'],
 })
-export class MealsListComponent implements OnInit {
+export class MealsListComponent implements OnInit, OnDestroy {
   meals$: Observable<Meal[]>;
   meals: Meal[] = [];
   currentMeals: Meal[] = [];
@@ -21,6 +20,8 @@ export class MealsListComponent implements OnInit {
   pageIndex = 0;
   pageSize = 4;
   pageSizeOptions = [4, 8];
+
+  filterParams = '';
 
   mealSubscription: Subscription;
 
@@ -50,7 +51,7 @@ export class MealsListComponent implements OnInit {
   }
 
   removeMeal(mealId) {
-    this.mealsService.deleteMeal(mealId);
+    this.mealsService.deleteMeal(mealId).subscribe();
   }
 
   openDialog(mealId) {
@@ -68,6 +69,12 @@ export class MealsListComponent implements OnInit {
       this.pageIndex = event.pageIndex;
       this.pageSize = event.pageSize;
       this.spinnerService.hide();
-    }, 300);
+    }, 500);
+  }
+
+  ngOnDestroy() {
+    if(this.mealSubscription) {
+      this.mealSubscription.unsubscribe()
+    }
   }
 }

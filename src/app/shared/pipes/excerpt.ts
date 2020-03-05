@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'excerpt',
 })
 export class Excerpt implements PipeTransform {
-  transform(text: String, length: any): any {
+  transform(text: string, length: any): any {
     if (!text || !length) {
       return text;
     }

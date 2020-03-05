@@ -1,5 +1,7 @@
 <div class="meals">
   <ng-container *ngIf="meals.length !== 0">
+    <input class="meals__search-input" type="text" matInput placeholder="Search" [(ngModel)]="filterParams" />
+
     <mat-paginator
       #matPagePaginator
       class="meals__paginator"
@@ -14,7 +16,7 @@
       <app-meal
         class="meals__item"
         appMoveOnHover
-        *ngFor="let singleMeal of currentMeals"
+        *ngFor="let singleMeal of currentMeals | search: filterParams"
         [meal]="singleMeal"
         (editMeal)="openDialog($event)"
         (removeMeal)="removeMeal($event)"

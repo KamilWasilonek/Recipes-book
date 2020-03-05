@@ -7,7 +7,6 @@ import {
   OnInit,
 } from '@angular/core';
 import { Meal } from 'src/app/shared/models/meal';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-meal',
@@ -20,11 +19,8 @@ export class MealComponent implements OnInit {
   @Output() removeMeal = new EventEmitter<string>();
   @Output() editMeal = new EventEmitter<string>();
   @Output() goDetails = new EventEmitter<string>();
-  serverUrl: string;
 
-  ngOnInit() {
-    this.serverUrl = environment.serverUrl;
-  }
+  ngOnInit() {}
 
   onMealRemove() {
     this.removeMeal.emit(this.meal._id);

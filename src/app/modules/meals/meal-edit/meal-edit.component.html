@@ -3,7 +3,7 @@
 
   <mat-dialog-content class="editMeal__form" [formGroup]="editForm">
     <mat-form-field>
-      <input matInput placeholder="Name" formControlName="name" />
+      <input type="search" matInput placeholder="Name" formControlName="name" />
       <mat-error *ngIf="name.errors?.required && name.touched" align="start">Enter name</mat-error>
     </mat-form-field>
     <mat-form-field>

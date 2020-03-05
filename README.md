@@ -1,5 +1,28 @@
-# MealsFinal
+# Recipe book
+This project allow to store recipies with the most imporant details(description, time of preparation). To see recipies it is obligatory to register and then login. All recipies are visible for everyone but only author of the recipie can modify it.
 
+# Project live
+The project use firebase hoisting:
+https://course-262512.firebaseapp.com
+
+The project uses API deployed on heroku:
+https://github.com/KamilWasilonek/Node_API
+
+The project was developed using angular and his most important functionalities such as:
+- TypeScript
+- Components architecture
+- Directives
+- Pipes
+- Routing
+- Forms
+- Services
+- RxJS
+
+Main functionalities:
+- Authorization system
+- Recipes CRUD operation
+
+# Development
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.0.
 
 ## Development server
